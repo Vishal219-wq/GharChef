@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Item Name -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="ITEM NAME *"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <EditText
+            android:id="@+id/etItemName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="e.g. Paneer Butter Masala"
+            android:inputType="textCapWords"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
+
+        <!-- Description -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="DESCRIPTION"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <EditText
+            android:id="@+id/etItemDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="Short description"
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:paddingStart="14dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="10dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TouchTargetSizeCheck,TextContrastCheck" />
+
+        <!-- Price -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="PRICE (₹) *"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <EditText
+            android:id="@+id/etItemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="e.g. 280"
+            android:inputType="numberDecimal"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
+
+        <!-- Category -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="CATEGORY KEY"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <EditText
+            android:id="@+id/etItemCategory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="north_indian / east_indian / street_food"
+            android:inputType="text"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:fontFamily="@font/buenard"
+            android:text="north_indian · east_indian · street_food"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp"
+            tools:ignore="HardcodedText,TextContrastCheck" />
+
+        <!-- Prep Time -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="PREP TIME"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <EditText
+            android:id="@+id/etItemPrepTime"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="e.g. 25 mins"
+            android:inputType="text"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
+
+        <!-- Rating -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="RATING (1.0 – 5.0)"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <EditText
+            android:id="@+id/etItemRating"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="e.g. 4.5"
+            android:inputType="numberDecimal"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
+
+        <!-- Item Image -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="ITEM IMAGE"
+            android:textColor="#2E7D32"
+            android:textSize="10sp"
+            android:fontFamily="@font/anton"
+            android:letterSpacing="0.1"
+            tools:ignore="HardcodedText,SmallSp" />
+
+        <!-- Image Preview -->
+        <ImageView
+            android:id="@+id/ivItemImagePreview"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:contentDescription="Item image preview"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery"
+            tools:ignore="HardcodedText,ImageContrastCheck" />
+
+        <!-- Upload from Gallery Button -->
+        <Button
+            android:id="@+id/btnPickImage"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#E8F5E9"
+            android:drawableStart="@android:drawable/ic_menu_upload"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/buenard"
+            android:text="Upload from Gallery"
+            android:textColor="#2E7D32"
+            android:textSize="13sp"
+            tools:ignore="HardcodedText,TouchTargetSizeCheck" />
+
+        <!-- OR divider -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#E0E0E0"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/buenard"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="OR"
+                android:textColor="#AAAAAA"
+                android:textSize="11sp"
+                tools:ignore="HardcodedText,TextContrastCheck" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#E0E0E0"/>
+        </LinearLayout>
+
+        <!-- Image URL input -->
+        <EditText
+            android:id="@+id/etItemImageUrl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_edit_text_admin"
+            android:fontFamily="@font/buenard"
+            android:hint="Paste image URL"
+            android:imeOptions="actionDone"
+            android:inputType="textUri"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="#1A1A2E"
+            android:textColorHint="#BBBBBB"
+            android:textSize="14sp"
+            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/buenard"
+            android:text="Paste a direct link to the dish image (jpg / png / webp)"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp"
+            tools:ignore="HardcodedText,TextContrastCheck" />
+
+        <!-- Toggles -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_toggle_row"
+            android:paddingStart="14dp" android:paddingEnd="14dp"
+            android:layout_marginBottom="8dp">
+            <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                android:src="@drawable/ic_admin_check"
+                app:tint="#2E7D32"
+                android:contentDescription="Available"
+                tools:ignore="HardcodedText" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Available"
+                android:textColor="#1A1A2E"
+                android:textSize="14sp"
+                android:fontFamily="@font/buenard"
+                android:layout_marginStart="10dp"
+                tools:ignore="HardcodedText" />
+            <Switch
+                android:id="@+id/switchAvailable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                tools:ignore="TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_toggle_row"
+            android:paddingStart="14dp" android:paddingEnd="14dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="Popular"
+                android:src="@drawable/ic_admin_star"
+                app:tint="#F57F17"
+                tools:ignore="HardcodedText,ImageContrastCheck" />
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mark as Popular"
+                android:textColor="#1A1A2E"
+                android:textSize="14sp"
+                android:fontFamily="@font/buenard"
+                android:layout_marginStart="10dp"
+                tools:ignore="HardcodedText" />
+            <Switch
+                android:id="@+id/switchPopular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

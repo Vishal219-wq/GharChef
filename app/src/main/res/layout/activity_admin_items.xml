@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F2F5">
+
+    <!-- BOTTOM NAV -->
+    <LinearLayout
+        android:id="@+id/adminBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:elevation="16dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout android:id="@+id/navAdminDashboard" android:layout_width="0dp"
+            android:layout_height="match_parent" android:layout_weight="1"
+            android:gravity="center" android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
+            <ImageView android:layout_width="26dp" android:layout_height="26dp"
+                android:src="@drawable/ic_home" app:tint="#9E9E9E"
+                android:contentDescription="Dashboard"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Dashboard" android:textColor="#9E9E9E"
+                android:textSize="10sp" android:fontFamily="@font/buenard"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/navAdminUsers" android:layout_width="0dp"
+            android:layout_height="match_parent" android:layout_weight="1"
+            android:gravity="center" android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
+            <ImageView android:layout_width="26dp" android:layout_height="26dp"
+                android:src="@drawable/ic_admin_users" app:tint="#9E9E9E"
+                android:contentDescription="Users"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Users" android:textColor="#9E9E9E"
+                android:textSize="10sp" android:fontFamily="@font/buenard"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/navAdminItems" android:layout_width="0dp"
+            android:layout_height="match_parent" android:layout_weight="1"
+            android:gravity="center" android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
+            <ImageView android:layout_width="26dp" android:layout_height="26dp"
+                android:src="@drawable/ic_admin_menu" app:tint="#2E7D32"
+                android:contentDescription="Items"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Items" android:textColor="#2E7D32"
+                android:textSize="10sp" android:textStyle="bold"
+                android:fontFamily="@font/buenard_bold"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/navAdminProfile" android:layout_width="0dp"
+            android:layout_height="match_parent" android:layout_weight="1"
+            android:gravity="center" android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
+            <ImageView android:layout_width="26dp" android:layout_height="26dp"
+                android:src="@drawable/ic_admin_profile" app:tint="#9E9E9E"
+                android:contentDescription="Profile"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Profile" android:textColor="#9E9E9E"
+                android:textSize="10sp" android:fontFamily="@font/buenard"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- GRADIENT HEADER -->
+    <RelativeLayout
+        android:id="@+id/headerBanner"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@drawable/bg_admin_header_gradient"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MENU MANAGEMENT"
+                android:textColor="#AAFFFFFF"
+                android:textSize="11sp"
+                android:letterSpacing="0.12"
+                android:fontFamily="@font/anton"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu Items"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:fontFamily="@font/adamina"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <!-- Add FAB-style button in header -->
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_button_white_pill"
+            android:stateListAnimator="@null"
+            android:text="+ Add Item"
+            android:textColor="#2E7D32"
+            android:textSize="13sp"
+            android:fontFamily="@font/buenard_bold"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"/>
+    </RelativeLayout>
+
+    <!-- SLIM PROGRESS -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/headerBanner"
+        android:indeterminate="true"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminateTint="#2E7D32"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerBanner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="No items yet. Tap + Add Item to begin."
+        android:textColor="#AAAAAA"
+        android:textSize="15sp"
+        android:fontFamily="@font/buenard"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAdminItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerBanner"
+        android:layout_above="@id/adminBottomNav"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"/>
+
+</RelativeLayout>

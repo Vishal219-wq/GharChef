@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top: name + price -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvAdminItemName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/tvAdminItemPrice"
+                android:layout_marginEnd="8dp"
+                android:text="Item Name"
+                android:textColor="#1A1A2E"
+                android:textSize="16sp"
+                android:fontFamily="@font/adamina"/>
+
+            <TextView
+                android:id="@+id/tvAdminItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="₹0"
+                android:textColor="#2E7D32"
+                android:textSize="16sp"
+                android:fontFamily="@font/buenard_bold"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <!-- Category + status row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView android:layout_width="13dp" android:layout_height="13dp"
+                android:src="@drawable/ic_admin_category"
+                app:tint="#AAAAAA"
+                android:contentDescription="Category"/>
+            <TextView
+                android:id="@+id/tvAdminItemCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Category"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:fontFamily="@font/buenard"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/tvAdminItemStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available"
+                android:textSize="12sp"
+                android:fontFamily="@font/buenard_bold"
+                android:textStyle="bold"
+                android:background="@drawable/bg_status_pill"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="#F0F0F0"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Action buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnEditItem"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_button_green_outline"
+                android:stateListAnimator="@null"
+                android:text="Edit"
+                android:textColor="#2E7D32"
+                android:textSize="12sp"
+                android:fontFamily="@font/buenard_bold"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_admin_edit"
+                android:drawablePadding="4dp"
+                android:drawableTint="#2E7D32"/>
+
+            <Button
+                android:id="@+id/btnToggleItem"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_chip_inactive"
+                android:stateListAnimator="@null"
+                android:text="Disable"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:fontFamily="@font/buenard"/>
+
+            <Button
+                android:id="@+id/btnDeleteItem"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_logout_button"
+                android:stateListAnimator="@null"
+                android:text="Delete"
+                android:textColor="#D32F2F"
+                android:textSize="12sp"
+                android:fontFamily="@font/buenard_bold"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_admin_delete"
+                android:drawablePadding="4dp"
+                android:drawableTint="#D32F2F"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

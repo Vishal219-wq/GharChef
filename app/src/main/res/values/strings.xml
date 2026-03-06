@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">GharChef</string>
+    <string name="greeting_evening">Good Evening, Vishal 👋</string>
+    <string name="subtitle">Ready to cook something fresh?</string>
+    <string name="search_hint">Search dishes, cuisines, or ingredients</string>
+    <string name="category_all">All</string>
+    <string name="category_indian">Indian</string>
+    <string name="category_regional">Regional</string>
+    <string name="category_fast_cooking">Fast Cooking</string>
+    <string name="popular_dishes">Popular Dishes</string>
+    <string name="see_all">See all</string>
+    <string name="recommended">Recommended for you</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="paneer_title">Paneer Butter Masala Kit</string>
+    <string name="paneer_price">$14.99</string>
+    <string name="paneer_desc">Includes fresh paneer, spices, and pre-cut veggies.</string>
+    <string name="paneer_time">25 mins</string>
+    <string name="medi_title">Mediterranean Bowl Kit</string>
+    <string name="medi_price">$12.50</string>
+    <string name="medi_desc">Quick protein-packed bowl with quinoa and feta.</string>
+    <string name="medi_time">15 mins</string>
+    <string name="salad_title">Quick Garden Salad</string>
+    <string name="salad_desc">Perfect for a light lunch</string>
+    <string name="salad_price">$9.99</string>
+    <string name="salad_rating">★ 4.8 (120+)</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_orders">Orders</string>
+    <string name="nav_cart">Cart</string>
+    <string name="nav_profile">Profile</string>
+</resources>

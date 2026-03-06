@@ -12,174 +12,135 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
-    private lateinit var tvName: TextView
-    private lateinit var tvEmail: TextView
-    private lateinit var tvCompletion: TextView
-    private lateinit var progressCompletion: ProgressBar
-    private lateinit var etEditName: EditText
-    private lateinit var etEditUsername: EditText
-    private lateinit var etEditMobile: EditText
-    private lateinit var etEditAddress: EditText
-    private lateinit var etEditCity: EditText
-    private lateinit var etEditPincode: EditText
-    private lateinit var etEditDietPref: EditText
-    private lateinit var btnSave: Button
-    private lateinit var btnLogout: Button
-    private lateinit var progressBar: ProgressBar
+    private var dietPref = "Veg"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        db   = FirebaseFirestore.getInstance()
 
-        tvName = findViewById(R.id.tvProfileName)
-        tvEmail = findViewById(R.id.tvProfileEmail)
-        tvCompletion = findViewById(R.id.tvCompletion)
-        progressCompletion = findViewById(R.id.progressCompletion)
-        etEditName = findViewById(R.id.etEditName)
-        etEditUsername = findViewById(R.id.etEditUsername)
-        etEditMobile = findViewById(R.id.etEditMobile)
-        etEditAddress = findViewById(R.id.etEditAddress)
-        etEditCity = findViewById(R.id.etEditCity)
-        etEditPincode = findViewById(R.id.etEditPincode)
-        etEditDietPref = findViewById(R.id.etEditDietPref)
-        btnSave = findViewById(R.id.btnSave)
-        btnLogout = findViewById(R.id.btnLogout)
-        progressBar = findViewById(R.id.progressBar)
+        val tvName           = findViewById<TextView>(R.id.tvProfileName)
+        val tvCompletionPct  = findViewById<TextView>(R.id.tvCompletionPct)
+        val tvCompletionHint = findViewById<TextView>(R.id.tvCompletionHint)
+        val progressCompl    = findViewById<ProgressBar>(R.id.progressCompletion)
+        val etName           = findViewById<EditText>(R.id.etEditName)
+        val etMobile         = findViewById<EditText>(R.id.etEditMobile)
+        val etAddress        = findViewById<EditText>(R.id.etEditAddress)
+        val etCity           = findViewById<EditText>(R.id.etEditCity)
+        val etPincode        = findViewById<EditText>(R.id.etEditPincode)
+        val btnVeg           = findViewById<Button>(R.id.btnVeg)
+        val btnNonVeg        = findViewById<Button>(R.id.btnNonVeg)
+        val btnSave          = findViewById<Button>(R.id.btnSave)
+        val btnLogout        = findViewById<Button>(R.id.btnLogout)
+        val progressBar      = findViewById<ProgressBar>(R.id.progressBar)
 
-        findViewById<ImageView>(R.id.ivBack).setOnClickListener { finish() }
-
-        // Bottom navigation
+        findViewById<android.widget.ImageView>(R.id.ivBack).setOnClickListener { finish() }
         setupBottomNavigation()
 
-        loadProfile()
-
-        btnSave.setOnClickListener { saveProfile() }
-
-        btnLogout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        // Diet preference buttons
+        fun selectDiet(pref: String) {
+            dietPref = pref
+            if (pref == "Veg") {
+                btnVeg.setBackgroundResource(R.drawable.bg_diet_veg_selected)
+                btnVeg.setTextColor(android.graphics.Color.parseColor("#2E7D32"))
+                btnNonVeg.setBackgroundResource(R.drawable.bg_diet_nonveg_unselected)
+                btnNonVeg.setTextColor(android.graphics.Color.parseColor("#888888"))
+            } else {
+                btnNonVeg.setBackgroundResource(R.drawable.bg_diet_veg_selected)
+                btnNonVeg.setTextColor(android.graphics.Color.parseColor("#C62828"))
+                btnVeg.setBackgroundResource(R.drawable.bg_diet_nonveg_unselected)
+                btnVeg.setTextColor(android.graphics.Color.parseColor("#888888"))
+            }
         }
-    }
+        btnVeg.setOnClickListener { selectDiet("Veg") }
+        btnNonVeg.setOnClickListener { selectDiet("Non-Veg") }
 
-    private fun setupBottomNavigation() {
-        findViewById<LinearLayout>(R.id.navHome).setOnClickListener {
-            val intent = Intent(this, ActivityHome::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-        }
-
-        findViewById<LinearLayout>(R.id.navOrders).setOnClickListener {
-            startActivity(Intent(this, OrdersActivity::class.java))
-        }
-
-        findViewById<LinearLayout>(R.id.navCart).setOnClickListener {
-            startActivity(Intent(this, CartActivity::class.java))
-        }
-
-        findViewById<LinearLayout>(R.id.navProfile).setOnClickListener {
-            // Already on Profile screen
-        }
-    }
-
-    private fun loadProfile() {
+        // Load profile
         val uid = auth.currentUser?.uid ?: return
         progressBar.visibility = View.VISIBLE
-
-        tvEmail.text = auth.currentUser?.email ?: ""
 
         db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
                 progressBar.visibility = View.GONE
                 if (doc.exists()) {
-                    val name = doc.getString("name") ?: ""
-                    val username = doc.getString("username") ?: ""
-                    val mobile = doc.getString("mobile") ?: ""
+                    val name    = doc.getString("name") ?: ""
+                    val mobile  = doc.getString("mobile") ?: ""
                     val address = doc.getString("address") ?: ""
-                    val city = doc.getString("city") ?: ""
+                    val city    = doc.getString("city") ?: ""
                     val pincode = doc.getString("pincode") ?: ""
-                    val dietPref = doc.getString("dietPref") ?: ""
+                    val diet    = doc.getString("dietPref") ?: "Veg"
 
                     tvName.text = name.ifEmpty { "Your Name" }
-                    etEditName.setText(name)
-                    etEditUsername.setText(username)
-                    etEditMobile.setText(mobile)
-                    etEditAddress.setText(address)
-                    etEditCity.setText(city)
-                    etEditPincode.setText(pincode)
-                    etEditDietPref.setText(dietPref)
+                    etName.setText(name)
+                    etMobile.setText(mobile)
+                    etAddress.setText(address)
+                    etCity.setText(city)
+                    etPincode.setText(pincode)
+                    selectDiet(diet)
 
-                    calculateCompletion(name, username, mobile, address, city, pincode, dietPref)
+                    // Completion
+                    val fields = listOf(name, mobile, address, city, pincode)
+                    val pct = (fields.count { it.isNotEmpty() } * 100) / fields.size
+                    progressCompl.progress = pct
+                    tvCompletionPct.text = "$pct%"
+                    tvCompletionHint.text = when {
+                        pct < 40 -> "Add more details to get better recommendations!"
+                        pct < 80 -> "Your profile is almost complete!"
+                        else     -> "Your profile is almost complete! This helps us find chefs near you."
+                    }
+                    tvCompletionPct.setTextColor(android.graphics.Color.parseColor(
+                        if (pct >= 80) "#4CAF50" else if (pct >= 40) "#FF9800" else "#F44336"
+                    ))
                 }
             }
-            .addOnFailureListener {
-                progressBar.visibility = View.GONE
-                Toast.makeText(this, "Failed to load profile", Toast.LENGTH_SHORT).show()
-            }
-    }
+            .addOnFailureListener { progressBar.visibility = View.GONE }
 
-    private fun calculateCompletion(vararg fields: String) {
-        val filled = fields.count { it.isNotEmpty() }
-        val percent = (filled * 100) / fields.size
-        progressCompletion.progress = percent
-        tvCompletion.text = "Profile $percent% complete"
+        btnSave.setOnClickListener {
+            val name    = etName.text.toString().trim()
+            if (name.isEmpty()) { etName.error = "Name is required"; return@setOnClickListener }
 
-        val color = when {
-            percent < 40 -> android.graphics.Color.parseColor("#F44336")
-            percent < 80 -> android.graphics.Color.parseColor("#FF9800")
-            else -> android.graphics.Color.parseColor("#4CAF50")
-        }
-        tvCompletion.setTextColor(color)
-    }
+            btnSave.isEnabled = false
+            btnSave.text = "Saving..."
 
-    private fun saveProfile() {
-        val uid = auth.currentUser?.uid ?: return
-
-        val name = etEditName.text.toString().trim()
-        val username = etEditUsername.text.toString().trim()
-        val mobile = etEditMobile.text.toString().trim()
-        val address = etEditAddress.text.toString().trim()
-        val city = etEditCity.text.toString().trim()
-        val pincode = etEditPincode.text.toString().trim()
-        val dietPref = etEditDietPref.text.toString().trim()
-
-        if (name.isEmpty()) {
-            etEditName.error = "Name is required"
-            return
+            db.collection("users").document(uid).update(mapOf(
+                "name"     to name,
+                "mobile"   to etMobile.text.toString().trim(),
+                "address"  to etAddress.text.toString().trim(),
+                "city"     to etCity.text.toString().trim(),
+                "pincode"  to etPincode.text.toString().trim(),
+                "dietPref" to dietPref
+            ))
+                .addOnSuccessListener {
+                    btnSave.isEnabled = true
+                    btnSave.text = "Save Changes"
+                    tvName.text = name
+                    Toast.makeText(this, "Profile updated! ✓", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    btnSave.isEnabled = true
+                    btnSave.text = "Save Changes"
+                    Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
         }
 
-        btnSave.isEnabled = false
-        btnSave.text = "Saving..."
+        btnLogout.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+            finish()
+        }
+    }
 
-        val updates = hashMapOf<String, Any>(
-            "name" to name,
-            "username" to username,
-            "mobile" to mobile,
-            "address" to address,
-            "city" to city,
-            "pincode" to pincode,
-            "dietPref" to dietPref
-        )
-
-        db.collection("users").document(uid)
-            .update(updates)
-            .addOnSuccessListener {
-                btnSave.isEnabled = true
-                btnSave.text = "Save Changes"
-                tvName.text = name
-                calculateCompletion(name, username, mobile, address, city, pincode, dietPref)
-                Toast.makeText(this, "Profile updated!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                btnSave.isEnabled = true
-                btnSave.text = "Save Changes"
-                Toast.makeText(this, "Failed to update: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
+    private fun setupBottomNavigation() {
+        findViewById<android.widget.LinearLayout>(R.id.navHome).setOnClickListener {
+            startActivity(Intent(this, ActivityHome::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+        }
+        findViewById<android.widget.LinearLayout>(R.id.navOrders).setOnClickListener {
+            startActivity(Intent(this, OrdersActivity::class.java))
+        }
+        findViewById<android.widget.LinearLayout>(R.id.navFavs).setOnClickListener { /* TODO */ }
+        findViewById<android.widget.LinearLayout>(R.id.navProfile).setOnClickListener { /* already here */ }
     }
 }

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GharChef">
         <activity
+            android:name=".AdminOrdersActivty"
+            android:exported="false" />
+        <activity
             android:name=".SearchActivity"
             android:exported="false" />
         <activity android:name=".AdminDashboardActivity" />

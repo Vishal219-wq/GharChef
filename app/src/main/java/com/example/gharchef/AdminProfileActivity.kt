@@ -8,60 +8,69 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminProfileActivity : AppCompatActivity() {
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_profile)
 
-        auth = FirebaseAuth.getInstance()
-        db   = FirebaseFirestore.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        val db   = FirebaseFirestore.getInstance()
 
-        setupBottomNavigation()
-        loadAdminInfo()
-
-        // Edit Profile – opens user-facing profile/edit screen
-        findViewById<Button>(R.id.btnEditProfile).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
-
-        // Logout
         findViewById<Button>(R.id.btnAdminLogout).setOnClickListener {
             auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            startActivity(Intent(this, LoginActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
             finish()
         }
-    }
 
-    private fun setupBottomNavigation() {
-        findViewById<LinearLayout>(R.id.navAdminDashboard).setOnClickListener {
-            startActivity(
-                Intent(this, AdminDashboardActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            )
-        }
-        findViewById<LinearLayout>(R.id.navAdminUsers).setOnClickListener {
-            startActivity(Intent(this, AdminUsersActivity::class.java))
-        }
-        findViewById<LinearLayout>(R.id.navAdminItems).setOnClickListener {
-            startActivity(Intent(this, AdminItemsActivity::class.java))
-        }
-        findViewById<LinearLayout>(R.id.navAdminProfile).setOnClickListener { /* already here */ }
-    }
-
-    private fun loadAdminInfo() {
-        val user = auth.currentUser ?: return
-        findViewById<TextView>(R.id.tvAdminEmail).text = user.email ?: ""
-        findViewById<TextView>(R.id.tvAdminUid).text   = "UID: ${user.uid.take(16)}…"
-
-        db.collection("users").document(user.uid).get()
+        val uid = auth.currentUser?.uid ?: return
+        db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
-                val name = doc.getString("name") ?: "Admin"
-                findViewById<TextView>(R.id.tvAdminName).text = name
+                val name  = doc.getString("name")  ?: "Admin"
+                val email = doc.getString("email") ?: ""
+                try {
+                    findViewById<TextView>(R.id.tvAdminName).text  = name
+                    findViewById<TextView>(R.id.tvAdminEmail).text = email
+                } catch (_: Exception) {}
             }
+    }
+}
+
+class AdminUserOrdersActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_admin_user_orders)
+
+        val userId   = intent.getStringExtra("userId")   ?: ""
+        val userName = intent.getStringExtra("userName") ?: "User"
+
+        try {
+            findViewById<TextView>(R.id.tvUserOrdersTitle).text = "$userName's Orders"
+        } catch (_: Exception) {}
+
+        val db = FirebaseFirestore.getInstance()
+        val rv = try { findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvUserOrders) } catch (_: Exception) { null }
+        rv?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+
+        if (userId.isNotEmpty()) {
+            db.collection("orders").whereEqualTo("userId", userId).get()
+                .addOnSuccessListener { result ->
+                    val orders = result.documents.map { doc ->
+                        val items = (doc.get("items") as? List<Map<String, Any>>) ?: emptyList()
+                        AdminOrder(
+                            id        = doc.id,
+                            userId    = userId,
+                            items     = items,
+                            total     = doc.getDouble("totalAmount") ?: 0.0,
+                            status    = doc.getString("status") ?: "Confirmed",
+                            timestamp = doc.getLong("timestamp") ?: 0L
+                        )
+                    }.sortedByDescending { it.timestamp }
+
+                    rv?.adapter = AdminOrdersAdapter(orders) {}
+                }
+        }
+
+        try { findViewById<android.widget.ImageView>(R.id.ivBack).setOnClickListener { finish() } } catch (_: Exception) {}
     }
 }

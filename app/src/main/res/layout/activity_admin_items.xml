@@ -3,156 +3,143 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F2F5">
+    android:background="#F5F0EA">
 
     <!-- BOTTOM NAV -->
-    <LinearLayout
-        android:id="@+id/adminBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
+    <LinearLayout android:id="@+id/adminBottomNav"
+        android:layout_width="match_parent" android:layout_height="64dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:elevation="16dp"
-        android:orientation="horizontal"
-        android:weightSum="4">
-
-        <LinearLayout android:id="@+id/navAdminDashboard" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_home" app:tint="#9E9E9E"
-                android:contentDescription="Dashboard"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Dashboard" android:textColor="#9E9E9E"
-                android:textSize="10sp" android:fontFamily="@font/buenard"
-                android:layout_marginTop="2dp"/>
+        android:background="#FFFFFF" android:elevation="8dp"
+        android:orientation="horizontal" android:weightSum="5">
+        <LinearLayout android:id="@+id/navAdminDashboard" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_admin_grid" app:tint="#AAAAAA" android:contentDescription="Dash" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="DASH" android:textColor="#AAAAAA" android:textSize="9sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/navAdminUsers" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_admin_users" app:tint="#9E9E9E"
-                android:contentDescription="Users"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Users" android:textColor="#9E9E9E"
-                android:textSize="10sp" android:fontFamily="@font/buenard"
-                android:layout_marginTop="2dp"/>
+        <LinearLayout android:id="@+id/navAdminOrders" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_orders" app:tint="#AAAAAA" android:contentDescription="Orders" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ORDERS" android:textColor="#AAAAAA" android:textSize="9sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/navAdminItems" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_admin_menu" app:tint="#2E7D32"
-                android:contentDescription="Items"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Items" android:textColor="#2E7D32"
-                android:textSize="10sp" android:textStyle="bold"
-                android:fontFamily="@font/buenard_bold"
-                android:layout_marginTop="2dp"/>
+        <LinearLayout android:id="@+id/navAdminItems" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_admin_menu" app:tint="#E8871A" android:contentDescription="Menu" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MENU" android:textColor="#E8871A" android:textSize="9sp" android:textStyle="bold" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/navAdminProfile" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_admin_profile" app:tint="#9E9E9E"
-                android:contentDescription="Profile"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Profile" android:textColor="#9E9E9E"
-                android:textSize="10sp" android:fontFamily="@font/buenard"
-                android:layout_marginTop="2dp"/>
+        <LinearLayout android:id="@+id/navAdminUsers" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_admin_users" app:tint="#AAAAAA" android:contentDescription="Users" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="USERS" android:textColor="#AAAAAA" android:textSize="9sp" android:layout_marginTop="2dp" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/navAdminProfile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_admin_settings" app:tint="#AAAAAA" android:contentDescription="Config" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CONFIG" android:textColor="#AAAAAA" android:textSize="9sp" android:layout_marginTop="2dp" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- GRADIENT HEADER -->
-    <RelativeLayout
-        android:id="@+id/headerBanner"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="@drawable/bg_admin_header_gradient"
-        android:padding="20dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <!-- HEADER -->
+    <RelativeLayout android:id="@+id/header"
+        android:layout_width="match_parent" android:layout_height="60dp"
+        android:background="#F5F0EA" android:paddingStart="16dp" android:paddingEnd="16dp">
+        <ImageView android:id="@+id/ivBack"
+            android:layout_width="36dp" android:layout_height="36dp"
             android:layout_centerVertical="true"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MENU MANAGEMENT"
-                android:textColor="#AAFFFFFF"
-                android:textSize="11sp"
-                android:letterSpacing="0.12"
-                android:fontFamily="@font/anton"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Menu Items"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:fontFamily="@font/adamina"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <!-- Add FAB-style button in header -->
-        <Button
-            android:id="@+id/btnAddItem"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/bg_button_white_pill"
-            android:stateListAnimator="@null"
-            android:text="+ Add Item"
-            android:textColor="#2E7D32"
-            android:textSize="13sp"
-            android:fontFamily="@font/buenard_bold"
-            android:textStyle="bold"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"/>
+            android:src="@drawable/ic_back" android:background="@drawable/bg_back_button"
+            android:padding="8dp" android:contentDescription="Back" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Menu Management" android:textColor="#1A1A2E"
+            android:textSize="18sp" android:textStyle="bold" />
+        <ImageView android:id="@+id/ivSearch"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+            android:src="@drawable/ic_search"
+            android:background="@drawable/bg_back_button"
+            android:padding="8dp" android:contentDescription="Search" />
     </RelativeLayout>
 
-    <!-- SLIM PROGRESS -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_below="@id/headerBanner"
-        android:indeterminate="true"
+    <!-- SEARCH BAR (hidden by default, shown when search tapped) -->
+    <RelativeLayout android:id="@+id/searchBar"
+        android:layout_width="match_parent" android:layout_height="52dp"
+        android:layout_below="@id/header"
+        android:background="#FFFFFF"
+        android:paddingStart="16dp" android:paddingEnd="16dp"
+        android:elevation="2dp">
+        <ImageView android:layout_width="20dp" android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_search" app:tint="#AAAAAA" android:contentDescription="Search" />
+        <EditText android:id="@+id/etSearchItems"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:background="@null"
+            android:hint="Search dishes..." android:textColorHint="#BBBBBB"
+            android:inputType="text" android:textColor="#1A1A2E" android:textSize="14sp" />
+    </RelativeLayout>
+
+    <!-- CATEGORY TABS -->
+    <HorizontalScrollView android:id="@+id/tabsScroll"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_below="@id/searchBar"
+        android:background="#FFFFFF"
+        android:scrollbars="none">
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="50dp"
+            android:orientation="horizontal" android:paddingStart="16dp" android:paddingEnd="16dp">
+            <TextView android:id="@+id/tabAll"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:gravity="center" android:text="All Items"
+                android:textColor="#E8871A" android:textSize="14sp" android:textStyle="bold"
+                android:layout_marginEnd="24dp"
+                android:paddingBottom="4dp"
+                android:background="@drawable/tab_indicator_bottom" />
+            <TextView android:id="@+id/tabMainCourse"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:gravity="center" android:text="Main Course"
+                android:textColor="#AAAAAA" android:textSize="14sp"
+                android:layout_marginEnd="24dp" />
+            <TextView android:id="@+id/tabSnacks"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:gravity="center" android:text="Snacks"
+                android:textColor="#AAAAAA" android:textSize="14sp"
+                android:layout_marginEnd="24dp" />
+            <TextView android:id="@+id/tabDesserts"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:gravity="center" android:text="Desserts"
+                android:textColor="#AAAAAA" android:textSize="14sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- PROGRESS -->
+    <ProgressBar android:id="@+id/progressBar"
+        android:layout_width="match_parent" android:layout_height="3dp"
+        android:layout_below="@id/tabsScroll"
         style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminateTint="#2E7D32"
-        android:visibility="gone"/>
+        android:indeterminate="true" android:indeterminateTint="#E8871A"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tvEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/headerBanner"
-        android:layout_centerHorizontal="true"
+    <!-- EMPTY STATE -->
+    <TextView android:id="@+id/tvEmpty"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_below="@id/tabsScroll" android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:text="No items yet. Tap + Add Item to begin."
-        android:textColor="#AAAAAA"
-        android:textSize="15sp"
-        android:fontFamily="@font/buenard"
-        android:visibility="gone"/>
+        android:text="No items yet. Tap + to add." android:textColor="#AAAAAA" android:textSize="15sp"
+        android:visibility="gone" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAdminItems"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/headerBanner"
+    <!-- RECYCLER -->
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvAdminItems"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_below="@id/tabsScroll"
         android:layout_above="@id/adminBottomNav"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:clipToPadding="false"/>
+        android:paddingStart="16dp" android:paddingEnd="16dp"
+        android:paddingTop="8dp" android:paddingBottom="80dp"
+        android:clipToPadding="false" />
+
+    <!-- FAB ADD -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddItem"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/adminBottomNav"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_plus"
+        app:backgroundTint="#E8871A"
+        app:tint="#FFFFFF"
+        android:contentDescription="Add dish" />
 
 </RelativeLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="14dp">
+
+        <!-- Order ID + Total + Status -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:id="@+id/tvAdminOrderId"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Order #GC-0000"
+                android:textColor="#1A1A2E" android:textSize="15sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tvAdminOrderTotal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="₹0"
+                android:textColor="#E8871A" android:textSize="15sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Items -->
+        <TextView android:id="@+id/tvAdminOrderItems"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Items..."
+            android:textColor="#888888" android:textSize="13sp"
+            android:maxLines="2" android:ellipsize="end" />
+
+        <!-- Status + Time row -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:id="@+id/tvAdminOrderStatus"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Preparing"
+                android:textColor="#FF9800" android:textSize="13sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tvAdminOrderTime"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="2 mins ago"
+                android:textColor="#BBBBBB" android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Update status button -->
+        <Button
+            android:id="@+id/btnUpdateStatus"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_button_orange"
+            android:stateListAnimator="@null"
+            android:text="Update Status"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

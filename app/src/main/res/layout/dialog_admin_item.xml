@@ -1,337 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
-
-        <!-- Item Name -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="ITEM NAME *"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
-
-        <EditText
-            android:id="@+id/etItemName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="e.g. Paneer Butter Masala"
-            android:inputType="textCapWords"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
-
-        <!-- Description -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="DESCRIPTION"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
-
-        <EditText
-            android:id="@+id/etItemDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="Short description"
-            android:inputType="textMultiLine"
-            android:minLines="2"
-            android:paddingStart="14dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="14dp"
-            android:paddingBottom="10dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TouchTargetSizeCheck,TextContrastCheck" />
-
-        <!-- Price -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="PRICE (₹) *"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
-
-        <EditText
-            android:id="@+id/etItemPrice"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="e.g. 280"
-            android:inputType="numberDecimal"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
-
-        <!-- Category -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="CATEGORY KEY"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
-
-        <EditText
-            android:id="@+id/etItemCategory"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="north_indian / east_indian / street_food"
-            android:inputType="text"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:fontFamily="@font/buenard"
-            android:text="north_indian · east_indian · street_food"
-            android:textColor="#AAAAAA"
-            android:textSize="11sp"
-            tools:ignore="HardcodedText,TextContrastCheck" />
-
-        <!-- Prep Time -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="PREP TIME"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
-
-        <EditText
-            android:id="@+id/etItemPrepTime"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="e.g. 25 mins"
-            android:inputType="text"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
-
-        <!-- Rating -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="RATING (1.0 – 5.0)"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
-
-        <EditText
-            android:id="@+id/etItemRating"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="e.g. 4.5"
-            android:inputType="numberDecimal"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
-
-        <!-- Item Image -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="ITEM IMAGE"
-            android:textColor="#2E7D32"
-            android:textSize="10sp"
-            android:fontFamily="@font/anton"
-            android:letterSpacing="0.1"
-            tools:ignore="HardcodedText,SmallSp" />
+        android:padding="16dp">
 
         <!-- Image Preview -->
         <ImageView
             android:id="@+id/ivItemImagePreview"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:contentDescription="Item image preview"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery"
-            tools:ignore="HardcodedText,ImageContrastCheck" />
-
-        <!-- Upload from Gallery Button -->
-        <Button
-            android:id="@+id/btnPickImage"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="#E8F5E9"
-            android:drawableStart="@android:drawable/ic_menu_upload"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/buenard"
-            android:text="Upload from Gallery"
-            android:textColor="#2E7D32"
-            android:textSize="13sp"
-            tools:ignore="HardcodedText,TouchTargetSizeCheck" />
-
-        <!-- OR divider -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="#E0E0E0"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/buenard"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="OR"
-                android:textColor="#AAAAAA"
-                android:textSize="11sp"
-                tools:ignore="HardcodedText,TextContrastCheck" />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="#E0E0E0"/>
-        </LinearLayout>
+            android:background="@drawable/bg_login_header"
+            android:contentDescription="Dish image preview" />
 
         <!-- Image URL input -->
-        <EditText
-            android:id="@+id/etItemImageUrl"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_edit_text_admin"
-            android:fontFamily="@font/buenard"
-            android:hint="Paste image URL"
-            android:imeOptions="actionDone"
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Image URL" android:textColor="#888888"
+            android:textSize="12sp" android:textStyle="bold" />
+        <EditText android:id="@+id/etItemImageUrl"
+            android:layout_width="match_parent" android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="https://..." android:textColorHint="#BBBBBB"
             android:inputType="textUri"
-            android:paddingStart="14dp"
-            android:paddingEnd="14dp"
-            android:textColor="#1A1A2E"
-            android:textColorHint="#BBBBBB"
-            android:textSize="14sp"
-            tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/buenard"
-            android:text="Paste a direct link to the dish image (jpg / png / webp)"
-            android:textColor="#AAAAAA"
-            android:textSize="11sp"
-            tools:ignore="HardcodedText,TextContrastCheck" />
-
-        <!-- Toggles -->
-        <LinearLayout android:layout_width="match_parent" android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_toggle_row"
             android:paddingStart="14dp" android:paddingEnd="14dp"
-            android:layout_marginBottom="8dp">
-            <ImageView android:layout_width="18dp" android:layout_height="18dp"
-                android:src="@drawable/ic_admin_check"
-                app:tint="#2E7D32"
-                android:contentDescription="Available"
-                tools:ignore="HardcodedText" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Available"
-                android:textColor="#1A1A2E"
-                android:textSize="14sp"
-                android:fontFamily="@font/buenard"
-                android:layout_marginStart="10dp"
-                tools:ignore="HardcodedText" />
-            <Switch
-                android:id="@+id/switchAvailable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:textColor="#1A1A2E" android:textSize="13sp" />
+
+        <!-- Dish Name -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Dish Name" android:textColor="#1A1A2E"
+            android:textSize="14sp" android:textStyle="bold" />
+        <EditText android:id="@+id/etItemName"
+            android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="e.g. Paneer Butter Masala" android:textColorHint="#BBBBBB"
+            android:inputType="textCapWords"
+            android:paddingStart="14dp" android:paddingEnd="14dp"
+            android:textColor="#1A1A2E" android:textSize="14sp" />
+
+        <!-- Description -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Description" android:textColor="#1A1A2E"
+            android:textSize="14sp" android:textStyle="bold" />
+        <EditText android:id="@+id/etItemDesc"
+            android:layout_width="match_parent" android:layout_height="80dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Rich description of the dish..."
+            android:textColorHint="#BBBBBB"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingStart="14dp" android:paddingEnd="14dp" android:paddingTop="12dp"
+            android:textColor="#1A1A2E" android:textSize="14sp"
+            android:gravity="top" />
+
+        <!-- Price + Category -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal" android:weightSum="2">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:layout_marginEnd="8dp" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Price (₹)" android:textColor="#1A1A2E"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <EditText android:id="@+id/etItemPrice"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="0.00" android:textColorHint="#BBBBBB"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="14dp" android:paddingEnd="14dp"
+                    android:textColor="#1A1A2E" android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:layout_marginStart="8dp" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Category" android:textColor="#1A1A2E"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <Spinner android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_input_field"
+                    android:paddingStart="10dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Prep Time + Rating -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal" android:weightSum="2">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:layout_marginEnd="8dp" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Prep Time (min)" android:textColor="#1A1A2E"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <EditText android:id="@+id/etItemPrepTime"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="30 mins" android:textColorHint="#BBBBBB"
+                    android:inputType="text"
+                    android:paddingStart="14dp" android:paddingEnd="14dp"
+                    android:textColor="#1A1A2E" android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:layout_marginStart="8dp" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Avg. Rating" android:textColor="#1A1A2E"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <EditText android:id="@+id/etItemRating"
+                    android:layout_width="match_parent" android:layout_height="52dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_input_field"
+                    android:hint="4.5" android:textColorHint="#BBBBBB"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="14dp" android:paddingEnd="14dp"
+                    android:textColor="#1A1A2E" android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Available toggle -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_input_field"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:padding="14dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Available" android:textColor="#1A1A2E"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Show on menu for users" android:textColor="#AAAAAA" android:textSize="12sp" />
+            </LinearLayout>
+            <Switch android:id="@+id/switchAvailable"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:checked="true"
-                tools:ignore="TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml"/>
+                android:thumbTint="#E8871A" android:trackTint="#FFE0B2" />
         </LinearLayout>
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_toggle_row"
-            android:paddingStart="14dp" android:paddingEnd="14dp">
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:contentDescription="Popular"
-                android:src="@drawable/ic_admin_star"
-                app:tint="#F57F17"
-                tools:ignore="HardcodedText,ImageContrastCheck" />
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mark as Popular"
-                android:textColor="#1A1A2E"
-                android:textSize="14sp"
-                android:fontFamily="@font/buenard"
-                android:layout_marginStart="10dp"
-                tools:ignore="HardcodedText" />
-            <Switch
-                android:id="@+id/switchPopular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="TouchTargetSizeCheck,UseSwitchCompatOrMaterialXml"/>
+        <!-- Popular toggle -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input_field"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:padding="14dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Popular Choice" android:textColor="#1A1A2E"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Display in 'Most Loved' section" android:textColor="#AAAAAA" android:textSize="12sp" />
+            </LinearLayout>
+            <Switch android:id="@+id/switchPopular"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:thumbTint="#E8871A" android:trackTint="#FFE0B2" />
         </LinearLayout>
 
+        <View android:layout_width="match_parent" android:layout_height="8dp" />
     </LinearLayout>
 </ScrollView>

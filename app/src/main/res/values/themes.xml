@@ -1,54 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- Base Theme -->
-    <style name="Base.Theme.GharChef" parent="Theme.Material3.DayNight.NoActionBar">
-
-        <!-- Primary Colors -->
-        <item name="colorPrimary">@color/green_primary</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme -->
+    <style name="Theme.GharChef" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/orange_primary</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
         <item name="colorOnPrimary">@color/white</item>
-
-        <item name="colorSecondary">@color/green_light</item>
-        <item name="colorOnSecondary">@color/green_dark</item>
-
-        <!-- Background -->
-        <item name="android:colorBackground">@color/background_light</item>
-        <item name="android:windowBackground">@color/background_light</item>
-
-        <!-- Status Bar -->
-        <item name="android:statusBarColor">@color/background_light</item>
-        <item name="android:windowLightStatusBar">true</item>
-
-        <!-- Font -->
+        <item name="colorSecondary">@color/orange_light</item>
+        <item name="colorOnSecondary">@color/text_dark</item>
+        <item name="android:statusBarColor">@color/bg_cream</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowBackground">@color/bg_cream</item>
         <item name="android:fontFamily">sans-serif</item>
-
     </style>
 
-    <!-- App Theme -->
-    <style name="Theme.GharChef" parent="Base.Theme.GharChef" />
-
-    <!-- No ActionBar Theme -->
-    <style name="Theme.GharChef.NoActionBar" parent="Theme.GharChef">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <!-- Splash screen - no action bar, full screen feel -->
+    <style name="Theme.GharChef.Splash" parent="Theme.GharChef">
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="android:statusBarColor">@color/bg_light</item>
     </style>
-
-    <!-- Green Button -->
-    <style name="Widget.GharChef.Button.Green" parent="Widget.Material3.Button">
-        <item name="backgroundTint">@color/green_primary</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-    </style>
-
-    <!-- Outline Button -->
-    <style name="Widget.GharChef.Button.GreenOutline" parent="Widget.Material3.Button.OutlinedButton">
-        <item name="strokeColor">@color/green_primary</item>
-        <item name="android:textColor">@color/green_primary</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-    </style>
-
 </resources>

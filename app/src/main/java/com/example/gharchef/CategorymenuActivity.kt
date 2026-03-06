@@ -35,7 +35,7 @@ class CategoryMenuActivity : AppCompatActivity() {
     private lateinit var tvCategoryTitle: TextView
     private lateinit var progressBar: ProgressBar
 
-    private val menuItems = mutableListOf<MenuItem>()
+    private val menuItems = mutableListOf<MenuItemData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +102,7 @@ class CategoryMenuActivity : AppCompatActivity() {
                 menuItems.clear()
 
                 for (doc in result.documents) {
-                    val item = MenuItem(
+                    val item = MenuItemData(
                         id = doc.id,
                         name = doc.getString("name") ?: "",
                         description = doc.getString("description") ?: "",
@@ -135,7 +135,7 @@ class CategoryMenuActivity : AppCompatActivity() {
             }
     }
 
-    private fun addToCart(item: MenuItem) {
+    private fun addToCart(item: MenuItemData) {
         val uid = auth.currentUser?.uid
         if (uid == null) {
             Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show()
@@ -177,8 +177,8 @@ class CategoryMenuActivity : AppCompatActivity() {
 }
 
 class MenuItemAdapter(
-    private val items: List<MenuItem>,
-    private val onAddToCart: (MenuItem) -> Unit
+    private val items: List<MenuItemData>,
+    private val onAddToCart: (MenuItemData) -> Unit
 ) : RecyclerView.Adapter<MenuItemAdapter.MenuViewHolder>() {
 
     inner class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {

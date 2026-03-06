@@ -2,297 +2,233 @@ package com.example.gharchef
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 
 class ActivityHome : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var rvPopular: RecyclerView
-    private lateinit var rvRecommended: RecyclerView
-    private lateinit var progressBar: ProgressBar
+    private lateinit var rvAll: RecyclerView
     private lateinit var tvGreeting: TextView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        db = FirebaseFirestore.getInstance()
+        db   = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        rvPopular = findViewById(R.id.rvPopular)
-        rvRecommended = findViewById(R.id.rvRecommended)
+        rvPopular   = findViewById(R.id.rvPopularItems)
+        rvAll       = findViewById(R.id.rvAllItems)
+        tvGreeting  = findViewById(R.id.tvGreeting)
         progressBar = findViewById(R.id.progressBar)
-        tvGreeting = findViewById(R.id.tvGreeting)
 
-        rvPopular.layoutManager = LinearLayoutManager(this)
-        rvRecommended.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvPopular.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvAll.layoutManager     = GridLayoutManager(this, 2)
 
-        // Set greeting based on time
-        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
-        tvGreeting.text = when {
-            hour < 12 -> "Good Morning! 🌅"
-            hour < 17 -> "Good Afternoon! ☀️"
-            else -> "Good Evening! 🌙"
+        setupBottomNavigation()
+        loadUserGreeting()
+        loadMenuItems()
+
+        // Search bar click
+        findViewById<RelativeLayout>(R.id.searchBar).setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
         }
 
-        /* ===========================
-           BOTTOM NAVIGATION
-        ============================ */
-        findViewById<LinearLayout>(R.id.navHome).setOnClickListener {
-            // Already here
-        }
-        findViewById<LinearLayout>(R.id.navOrders).setOnClickListener {
-            startActivity(Intent(this, OrdersActivity::class.java))
-        }
-        findViewById<LinearLayout>(R.id.navCart).setOnClickListener {
+        // Cart icon
+        findViewById<ImageView>(R.id.ivCart).setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }
-        findViewById<LinearLayout>(R.id.navProfile).setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
+
+        // Category chips
+        mapOf(
+            R.id.chipAll         to "all",
+            R.id.chipNorthIndian to "north_indian",
+            R.id.chipStreetFood  to "street_food",
+            R.id.chipEastIndian  to "east_indian"
+        ).forEach { (id, cat) ->
+            try { findViewById<TextView>(id).setOnClickListener { loadMenuItems(cat) } } catch (_: Exception) {}
         }
-
-        /* ===========================
-           SEARCH ACTION
-        ============================ */
-        val etSearch = findViewById<EditText>(R.id.etSearch)
-        etSearch.setOnEditorActionListener { _, _, _ ->
-            val query = etSearch.text.toString().trim()
-            if (query.isNotEmpty()) {
-                val intent = Intent(this, SearchActivity::class.java)
-                intent.putExtra("QUERY", query)
-                startActivity(intent)
-            }
-            true
-        }
-
-        /* ===========================
-           CATEGORY CHIPS
-        ============================ */
-        val categoryGroup = findViewById<RadioGroup>(R.id.categoryGroup)
-        categoryGroup.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.chipAll) return@setOnCheckedChangeListener
-            val (name, key) = when (checkedId) {
-                R.id.chipIndian -> Pair("Indian", "north_indian")
-                R.id.chipRegional -> Pair("Regional", "east_indian")
-                R.id.chipFastCooking -> Pair("Fast Cooking", "street_food")
-                else -> return@setOnCheckedChangeListener
-            }
-            val intent = Intent(this, CategoryMenuActivity::class.java)
-            intent.putExtra("CATEGORY_NAME", name)
-            intent.putExtra("CATEGORY_KEY", key)
-            startActivity(intent)
-            // Reset chip selection after launching
-            categoryGroup.check(R.id.chipAll)
-        }
-
-        /* ===========================
-           LOAD DYNAMIC DATA
-        ============================ */
-        loadPopularDishes()
-        loadRecommendedDishes()
-
-        /* ===========================
-           LOAD USER GREETING
-        ============================ */
-        loadUserName()
     }
 
-    private fun loadUserName() {
+    override fun onResume() { super.onResume(); loadMenuItems() }
+
+    private fun loadUserGreeting() {
         val uid = auth.currentUser?.uid ?: return
         db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
-                val name = doc.getString("name") ?: ""
-                if (name.isNotEmpty()) {
-                    val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
-                    val greeting = when {
-                        hour < 12 -> "Good Morning"
-                        hour < 17 -> "Good Afternoon"
-                        else -> "Good Evening"
-                    }
-                    tvGreeting.text = "$greeting, ${name.split(" ").first()}! 👋"
-                }
+                val name = doc.getString("name") ?: doc.getString("username") ?: "there"
+                val firstName = name.split(" ").firstOrNull() ?: name
+                tvGreeting.text = "Hello, $firstName! 👋"
             }
     }
 
-    private fun loadPopularDishes() {
+    private fun loadMenuItems(category: String = "all") {
         progressBar.visibility = View.VISIBLE
-        db.collection("menu")
-            .whereEqualTo("available", true)
-            .whereEqualTo("popular", true)
-            .get()
+        val query = if (category == "all") {
+            db.collection("menu").whereEqualTo("available", true)
+        } else {
+            db.collection("menu").whereEqualTo("available", true).whereEqualTo("category", category)
+        }
+
+        query.get()
             .addOnSuccessListener { result ->
                 progressBar.visibility = View.GONE
-                val items = mutableListOf<MenuItem>()
-                for (doc in result.documents) {
-                    val item = MenuItem(
-                        id = doc.id,
-                        name = doc.getString("name") ?: "",
-                        description = doc.getString("description") ?: "",
-                        price = doc.getDouble("price") ?: 0.0,
-                        imageUrl = doc.getString("imageUrl") ?: "",
-                        category = doc.getString("category") ?: "",
-                        prepTime = doc.getString("prepTime") ?: "20 mins",
-                        rating = doc.getDouble("rating") ?: 4.0
-                    )
-                    if (item.name.isNotEmpty()) items.add(item)
+                val items = result.documents.mapNotNull { doc ->
+                    if ((doc.getString("name") ?: "").isNotEmpty()) {
+                        MenuItem(
+                            id          = doc.id,
+                            name        = doc.getString("name")        ?: "",
+                            description = doc.getString("description") ?: "",
+                            price       = doc.getDouble("price")       ?: 0.0,
+                            imageUrl    = doc.getString("imageUrl")    ?: "",
+                            category    = doc.getString("category")    ?: "",
+                            prepTime    = doc.getString("prepTime")    ?: "20 mins",
+                            rating      = doc.getDouble("rating")      ?: 4.0,
+                            available   = doc.getBoolean("available")  ?: true,
+                            popular     = doc.getBoolean("popular")    ?: false
+                        )
+                    } else null
                 }
-                if (items.isNotEmpty()) {
-                    rvPopular.adapter = HomeMenuAdapter(items) { addToCart(it) }
-                } else {
-                    // Fallback: load any available items
-                    loadAnyItems(rvPopular)
-                }
+
+                val popular = items.filter { it.popular }
+                val all     = items
+
+                rvPopular.adapter = PopularItemsAdapter(popular) { addToCart(it) }
+                rvAll.adapter     = AllItemsAdapter(all) { addToCart(it) }
+
+                // Show/hide empty state
+                val tvEmpty = try { findViewById<TextView>(R.id.tvNoItems) } catch (_: Exception) { null }
+                tvEmpty?.visibility = if (all.isEmpty()) View.VISIBLE else View.GONE
             }
-            .addOnFailureListener { e ->
+            .addOnFailureListener {
                 progressBar.visibility = View.GONE
-                Log.e("HOME", "Popular load failed: ${e.message}")
-                loadAnyItems(rvPopular)
-            }
-    }
-
-    private fun loadAnyItems(rv: RecyclerView) {
-        db.collection("menu")
-            .whereEqualTo("available", true)
-            .limit(5)
-            .get()
-            .addOnSuccessListener { result ->
-                val items = result.documents.mapNotNull { doc ->
-                    val name = doc.getString("name") ?: return@mapNotNull null
-                    MenuItem(
-                        id = doc.id, name = name,
-                        description = doc.getString("description") ?: "",
-                        price = doc.getDouble("price") ?: 0.0,
-                        imageUrl = doc.getString("imageUrl") ?: "",
-                        category = doc.getString("category") ?: "",
-                        prepTime = doc.getString("prepTime") ?: "20 mins",
-                        rating = doc.getDouble("rating") ?: 4.0
-                    )
-                }
-                rv.adapter = HomeMenuAdapter(items) { addToCart(it) }
-            }
-    }
-
-    private fun loadRecommendedDishes() {
-        db.collection("menu")
-            .whereEqualTo("available", true)
-            .limit(10)
-            .get()
-            .addOnSuccessListener { result ->
-                val items = result.documents.mapNotNull { doc ->
-                    val name = doc.getString("name") ?: return@mapNotNull null
-                    MenuItem(
-                        id = doc.id, name = name,
-                        description = doc.getString("description") ?: "",
-                        price = doc.getDouble("price") ?: 0.0,
-                        imageUrl = doc.getString("imageUrl") ?: "",
-                        category = doc.getString("category") ?: "",
-                        prepTime = doc.getString("prepTime") ?: "20 mins",
-                        rating = doc.getDouble("rating") ?: 4.0
-                    )
-                }
-                rvRecommended.adapter = RecommendedAdapter(items) { addToCart(it) }
+                Toast.makeText(this, "Failed to load menu", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun addToCart(item: MenuItem) {
-        val uid = auth.currentUser?.uid
-        if (uid == null) {
+        val uid = auth.currentUser?.uid ?: run {
             Toast.makeText(this, "Please login first", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java))
             return
         }
-        val itemRef = db.collection("carts").document(uid)
-            .collection("items").document(item.id)
 
-        itemRef.get().addOnSuccessListener { doc ->
-            if (doc.exists()) {
-                val qty = (doc.getLong("quantity") ?: 1).toInt()
-                itemRef.update("quantity", qty + 1)
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "${item.name} quantity updated ✓", Toast.LENGTH_SHORT).show()
-                    }
-            } else {
-                val cartItem = hashMapOf(
-                    "itemId" to item.id, "name" to item.name,
-                    "price" to item.price, "imageUrl" to item.imageUrl, "quantity" to 1
-                )
-                itemRef.set(cartItem, SetOptions.merge())
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "${item.name} added to cart ✓", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+        val cartRef = db.collection("carts").document(uid).collection("items")
+
+        // Check if item already in cart
+        cartRef.whereEqualTo("name", item.name).get()
+            .addOnSuccessListener { result ->
+                if (result.documents.isNotEmpty()) {
+                    // Increment quantity
+                    val doc      = result.documents[0]
+                    val currQty  = (doc.getLong("quantity") ?: 1).toInt()
+                    doc.reference.update("quantity", currQty + 1)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "${item.name} quantity updated 🛒", Toast.LENGTH_SHORT).show()
+                        }
+                } else {
+                    // Add new item
+                    val cartItem = hashMapOf(
+                        "name"     to item.name,
+                        "price"    to item.price,
+                        "imageUrl" to item.imageUrl,
+                        "quantity" to 1
+                    )
+                    cartRef.add(cartItem)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "${item.name} added to cart! 🛒", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Failed to add to cart", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
-        }.addOnFailureListener { e ->
-            Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+    }
+
+    private fun setupBottomNavigation() {
+        try {
+            val navHome    = findViewById<LinearLayout>(R.id.navHome)
+            val navSearch  = findViewById<LinearLayout>(R.id.navSearch)
+            val navOrders  = findViewById<LinearLayout>(R.id.navOrders)
+            val navCart    = findViewById<LinearLayout>(R.id.navCart)
+
+            navHome.setOnClickListener { /* already here */ }
+            navSearch.setOnClickListener { startActivity(Intent(this, SearchActivity::class.java)) }
+            navOrders.setOnClickListener { startActivity(Intent(this, OrdersActivity::class.java)) }
+            navCart.setOnClickListener   { startActivity(Intent(this, CartActivity::class.java)) }
+        } catch (_: Exception) {}
     }
 }
 
-// Adapter for popular dishes (vertical list)
-class HomeMenuAdapter(
+// ---------- Popular Items Adapter (horizontal) ----------
+class PopularItemsAdapter(
     private val items: List<MenuItem>,
     private val onAddToCart: (MenuItem) -> Unit
-) : RecyclerView.Adapter<HomeMenuAdapter.VH>() {
+) : RecyclerView.Adapter<PopularItemsAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName: TextView = view.findViewById(R.id.tvMenuItemName)
-        val tvDesc: TextView = view.findViewById(R.id.tvMenuItemDesc)
-        val tvPrice: TextView = view.findViewById(R.id.tvMenuItemPrice)
-        val tvPrepTime: TextView = view.findViewById(R.id.tvMenuItemPrepTime)
-        val tvRating: TextView = view.findViewById(R.id.tvMenuItemRating)
-        val btnAdd: Button = view.findViewById(R.id.btnAddToCart)
+        val ivImage:  ImageView = view.findViewById(R.id.ivPopularImage)
+        val tvName:   TextView  = view.findViewById(R.id.tvPopularName)
+        val tvPrice:  TextView  = view.findViewById(R.id.tvPopularPrice)
+        val tvRating: TextView  = view.findViewById(R.id.tvPopularRating)
+        val btnAdd:   Button    = view.findViewById(R.id.btnAddPopular)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        VH(LayoutInflater.from(parent.context).inflate(R.layout.item_menu, parent, false))
+        VH(LayoutInflater.from(parent.context).inflate(R.layout.item_popular_dish, parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
-        holder.tvName.text = item.name
-        holder.tvDesc.text = item.description
-        holder.tvPrice.text = "₹%.2f".format(item.price)
-        holder.tvPrepTime.text = "⏱ ${item.prepTime}"
-        holder.tvRating.text = "★ ${"%.1f".format(item.rating)}"
+        holder.tvName.text   = item.name
+        holder.tvPrice.text  = "₹%.0f".format(item.price)
+        holder.tvRating.text = "⭐ ${item.rating}"
+        if (item.imageUrl.isNotEmpty()) {
+            Glide.with(holder.itemView.context).load(item.imageUrl)
+                .placeholder(R.drawable.bg_image_placeholder).centerCrop().into(holder.ivImage)
+        }
         holder.btnAdd.setOnClickListener { onAddToCart(item) }
     }
 
     override fun getItemCount() = items.size
 }
 
-// Adapter for recommended dishes (horizontal scroll)
-class RecommendedAdapter(
+// ---------- All Items Adapter (grid) ----------
+class AllItemsAdapter(
     private val items: List<MenuItem>,
     private val onAddToCart: (MenuItem) -> Unit
-) : RecyclerView.Adapter<RecommendedAdapter.VH>() {
+) : RecyclerView.Adapter<AllItemsAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName: TextView = view.findViewById(R.id.tvRecName)
-        val tvPrice: TextView = view.findViewById(R.id.tvRecPrice)
-        val tvRating: TextView = view.findViewById(R.id.tvRecRating)
-        val btnAdd: Button = view.findViewById(R.id.btnRecAdd)
+        val ivImage:  ImageView = view.findViewById(R.id.ivGridImage)
+        val tvName:   TextView  = view.findViewById(R.id.tvGridName)
+        val tvPrice:  TextView  = view.findViewById(R.id.tvGridPrice)
+        val tvTime:   TextView  = view.findViewById(R.id.tvGridTime)
+        val btnAdd:   Button    = view.findViewById(R.id.btnAddGrid)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        VH(LayoutInflater.from(parent.context).inflate(R.layout.item_recommended, parent, false))
+        VH(LayoutInflater.from(parent.context).inflate(R.layout.item_grid_dish, parent, false))
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
-        holder.tvName.text = item.name
-        holder.tvPrice.text = "₹%.2f".format(item.price)
-        holder.tvRating.text = "★ ${"%.1f".format(item.rating)}"
+        holder.tvName.text  = item.name
+        holder.tvPrice.text = "₹%.0f".format(item.price)
+        holder.tvTime.text  = "⏱ ${item.prepTime}"
+        if (item.imageUrl.isNotEmpty()) {
+            Glide.with(holder.itemView.context).load(item.imageUrl)
+                .placeholder(R.drawable.bg_image_placeholder).centerCrop().into(holder.ivImage)
+        }
         holder.btnAdd.setOnClickListener { onAddToCart(item) }
     }
 

@@ -1,302 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F2F5">
+    android:orientation="vertical"
+    android:background="#F5F0EA"
+    android:gravity="center"
+    android:padding="24dp">
 
-    <!-- BOTTOM NAV -->
-    <LinearLayout
-        android:id="@+id/adminBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:elevation="16dp"
-        android:orientation="horizontal"
-        android:weightSum="4">
+    <ImageView android:layout_width="80dp" android:layout_height="80dp"
+        android:background="@drawable/bg_avatar_circle_orange"
+        android:src="@drawable/ic_admin_profile"
+        android:padding="18dp"
+        app:tint="#E8871A"
+        android:contentDescription="Admin" />
 
-        <LinearLayout android:id="@+id/navAdminDashboard" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_home" app:tint="#9E9E9E"
-                android:contentDescription="Dashboard"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Dashboard" android:textColor="#9E9E9E"
-                android:textSize="10sp" android:fontFamily="@font/buenard"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
+    <TextView android:id="@+id/tvAdminName"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Admin" android:textColor="#1A1A2E"
+        android:textSize="22sp" android:textStyle="bold" />
 
-        <LinearLayout android:id="@+id/navAdminUsers" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_admin_users" app:tint="#9E9E9E"
-                android:contentDescription="Users"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Users" android:textColor="#9E9E9E"
-                android:textSize="10sp" android:fontFamily="@font/buenard"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
+    <TextView android:id="@+id/tvAdminEmail"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="admin@gharchef.com" android:textColor="#888888" android:textSize="14sp" />
 
-        <LinearLayout android:id="@+id/navAdminItems" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_admin_menu" app:tint="#9E9E9E"
-                android:contentDescription="Items"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Items" android:textColor="#9E9E9E"
-                android:textSize="10sp" android:fontFamily="@font/buenard"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+        android:background="#E0E0E0" android:layout_marginTop="24dp" android:layout_marginBottom="24dp" />
 
-        <LinearLayout android:id="@+id/navAdminProfile" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView android:layout_width="26dp" android:layout_height="26dp"
-                android:src="@drawable/ic_admin_profile" app:tint="#2E7D32"
-                android:contentDescription="Profile"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Profile" android:textColor="#2E7D32"
-                android:textSize="10sp" android:textStyle="bold"
-                android:fontFamily="@font/buenard_bold"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/adminBottomNav"
-        android:scrollbars="none"
-        android:overScrollMode="never">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- GRADIENT PROFILE HEADER -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:background="@drawable/bg_admin_header_gradient">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <!-- Avatar Circle -->
-                    <FrameLayout
-                        android:layout_width="88dp"
-                        android:layout_height="88dp">
-                        <ImageView
-                            android:layout_width="88dp"
-                            android:layout_height="88dp"
-                            android:background="@drawable/bg_avatar_circle"
-                            android:contentDescription="Admin Avatar"/>
-                        <ImageView
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_admin_profile"
-                            app:tint="#2E7D32"
-                            android:contentDescription="Avatar Icon"/>
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/tvAdminName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="Admin"
-                        android:textColor="@color/white"
-                        android:textSize="24sp"
-                        android:fontFamily="@font/adamina"/>
-
-                    <!-- Badge pill -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="28dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_badge_pill"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp">
-                        <ImageView android:layout_width="14dp" android:layout_height="14dp"
-                            android:src="@drawable/ic_admin_shield"
-                            app:tint="#2E7D32"
-                            android:contentDescription="Shield"/>
-                        <TextView android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Administrator"
-                            android:textColor="#2E7D32"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/buenard_bold"
-                            android:layout_marginStart="5dp"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvAdminEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text=""
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="13sp"
-                        android:fontFamily="@font/buenard"/>
-
-                    <TextView
-                        android:id="@+id/tvAdminUid"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:text=""
-                        android:textColor="#88FFFFFF"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/buenard"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <!-- ACTIONS CARD -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Account Actions"
-                        android:textColor="#1A1A2E"
-                        android:textSize="17sp"
-                        android:fontFamily="@font/adamina"/>
-
-                    <View android:layout_width="match_parent" android:layout_height="1dp"
-                        android:background="#F0F0F0" android:layout_marginTop="12dp"
-                        android:layout_marginBottom="14dp"/>
-
-                    <!-- Edit Profile Button -->
-                    <Button
-                        android:id="@+id/btnEditProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:background="@drawable/bg_button_green"
-                        android:stateListAnimator="@null"
-                        android:text="Edit Profile"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/buenard_bold"
-                        android:textStyle="bold"
-                        android:drawableStart="@drawable/ic_admin_edit"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/white"/>
-
-                    <!-- Logout Button -->
-                    <Button
-                        android:id="@+id/btnAdminLogout"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="4dp"
-                        android:background="@drawable/bg_logout_button"
-                        android:stateListAnimator="@null"
-                        android:text="Logout"
-                        android:textColor="#D32F2F"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/buenard_bold"
-                        android:textStyle="bold"
-                        android:drawableStart="@drawable/ic_admin_logout"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="#D32F2F"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- APP VERSION INFO CARD -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="2dp">
-                <LinearLayout android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-                    <TextView android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="App Info"
-                        android:textColor="#1A1A2E"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/adamina"/>
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="12dp">
-                        <TextView android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="GharChef Admin"
-                            android:textColor="#555555"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/buenard"/>
-                        <TextView android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="v1.0.0"
-                            android:textColor="#2E7D32"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/buenard_bold"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
-                        <TextView android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Firebase Backend"
-                            android:textColor="#555555"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/buenard"/>
-                        <TextView android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Connected"
-                            android:textColor="#2E7D32"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/buenard_bold"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    <Button android:id="@+id/btnAdminLogout"
+        android:layout_width="match_parent" android:layout_height="52dp"
+        android:background="@drawable/bg_logout_button"
+        android:stateListAnimator="@null"
+        android:text="Logout from Admin"
+        android:textColor="#F44336" android:textSize="15sp" android:textStyle="bold" />
+</LinearLayout>

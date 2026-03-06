@@ -1,332 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="#F5F0EA">
 
-    <!-- BOTTOM NAV (declared first so layout_above works) -->
-    <LinearLayout
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+    <!-- BOTTOM NAV -->
+    <LinearLayout android:id="@+id/bottomNavHome"
+        android:layout_width="match_parent" android:layout_height="64dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:elevation="12dp"
-        android:weightSum="4"
-        tools:ignore="DisableBaselineAlignment">
-
-        <LinearLayout android:id="@+id/navHome" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                android:src="@drawable/ic_home" app:tint="@color/green_primary"
-                tools:ignore="ContentDescription"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/nav_home" android:textColor="@color/green_primary"
-                android:textSize="11sp" android:textStyle="bold"/>
+        android:background="#FFFFFF" android:elevation="8dp"
+        android:orientation="horizontal" android:weightSum="4">
+        <LinearLayout android:id="@+id/navHome" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_home" app:tint="#E8871A" android:contentDescription="Home" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Home" android:textColor="#E8871A" android:textSize="10sp" android:textStyle="bold" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/navOrders" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                android:src="@drawable/ic_orders" app:tint="@color/nav_icon_inactive"
-                tools:ignore="ContentDescription"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/nav_orders" android:textColor="@color/nav_icon_inactive" android:textSize="11sp"/>
+        <LinearLayout android:id="@+id/navSearch" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_search" app:tint="#AAAAAA" android:contentDescription="Search" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Search" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/navCart" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                android:src="@drawable/ic_cart" app:tint="@color/nav_icon_inactive"
-                tools:ignore="ContentDescription"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/nav_cart" android:textColor="@color/nav_icon_inactive" android:textSize="11sp"/>
+        <LinearLayout android:id="@+id/navOrders" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_orders" app:tint="#AAAAAA" android:contentDescription="Orders" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Orders" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/navProfile" android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1"
-            android:gravity="center" android:orientation="vertical">
-            <ImageView android:layout_width="24dp" android:layout_height="24dp"
-                android:src="@drawable/ic_profile" app:tint="@color/nav_icon_inactive"
-                tools:ignore="ContentDescription"/>
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/nav_profile" android:textColor="@color/nav_icon_inactive" android:textSize="11sp"/>
+        <LinearLayout android:id="@+id/navCart" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp" android:src="@drawable/ic_cart" app:tint="#AAAAAA" android:contentDescription="Cart" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cart" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- SCROLLABLE BODY -->
+    <!-- MAIN SCROLL -->
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNav"
+        android:layout_above="@id/bottomNavHome"
         android:scrollbars="none">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <!-- HEADER ROW -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp">
-
-                <ImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/splash"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_launcher_foreground"
-                    android:contentDescription="Avatar"
-                    android:scaleType="centerCrop"/>
-
-                <FrameLayout
-                    android:id="@+id/flNotification"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_chip_inactive"
-                        android:padding="9dp"
-                        android:src="@drawable/ic_notifications"
-                        android:contentDescription="Notifications"/>
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_gravity="top|end"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:background="@drawable/bg_notification_badge"/>
-                </FrameLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ivAvatar"
-                    android:layout_toStartOf="@id/flNotification"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp">
-
-                    <TextView
-                        android:id="@+id/tvGreeting"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Good Evening! 🌙"
-                        android:textColor="@color/text_primary"
-                        android:textSize="17sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/tvSubtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvGreeting"
-                        android:layout_marginTop="2dp"
-                        android:text="@string/subtitle"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"/>
-                </RelativeLayout>
+            <!-- TOP APP BAR -->
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="60dp"
+                android:background="#F5F0EA"
+                android:paddingStart="16dp" android:paddingEnd="16dp">
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerVertical="true" android:orientation="vertical">
+                    <TextView android:id="@+id/tvGreeting"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Hello! 👋"
+                        android:textColor="#1A1A2E" android:textSize="16sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="What would you like to eat?"
+                        android:textColor="#888888" android:textSize="12sp" />
+                </LinearLayout>
+                <ImageView android:id="@+id/ivCart"
+                    android:layout_width="40dp" android:layout_height="40dp"
+                    android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+                    android:background="@drawable/bg_icon_btn"
+                    android:src="@drawable/ic_cart"
+                    android:padding="9dp"
+                    app:tint="#E8871A"
+                    android:contentDescription="Cart" />
             </RelativeLayout>
 
             <!-- SEARCH BAR -->
-            <RelativeLayout
-                android:id="@+id/rlSearch"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/bg_search"
-                android:paddingStart="14dp"
-                android:paddingEnd="14dp">
-
-                <ImageView
-                    android:id="@+id/ivSearchIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+            <RelativeLayout android:id="@+id/searchBar"
+                android:layout_width="match_parent" android:layout_height="52dp"
+                android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="#FFFFFF"
+                android:paddingStart="16dp" android:paddingEnd="16dp"
+                android:elevation="2dp"
+                android:background2="@drawable/bg_input_field">
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:src="@drawable/ic_search"
-                    app:tint="@color/text_secondary"
-                    android:contentDescription="Search"/>
-
-                <EditText
-                    android:id="@+id/etSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/ivSearchIcon"
-                    android:background="@null"
-                    android:hint="@string/search_hint"
-                    android:textColorHint="@color/text_secondary"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    tools:ignore="Autofill"/>
+                    android:src="@drawable/ic_search" app:tint="#E8871A" android:contentDescription="Search" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp" android:layout_centerVertical="true"
+                    android:text="Search for dishes, cuisines..."
+                    android:textColor="#BBBBBB" android:textSize="14sp" />
             </RelativeLayout>
+
+            <!-- HERO BANNER -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent" android:layout_height="150dp"
+                android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp" app:cardElevation="4dp">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@drawable/bg_hero_banner">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical"
+                        android:layout_marginStart="20dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Ghar Ka Swad 🏠"
+                            android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Home-cooked meals delivered"
+                            android:textColor="#CCFFFFFF" android:textSize="13sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- CATEGORY CHIPS -->
-            <HorizontalScrollView
-                android:id="@+id/hsvCategories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:scrollbars="none">
-
-                <RadioGroup
-                    android:id="@+id/categoryGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton android:id="@+id/chipAll"
-                        android:layout_width="wrap_content" android:layout_height="36dp"
-                        android:layout_marginEnd="8dp" android:background="@drawable/chip_selector_bg"
-                        android:button="@null" android:checked="true" android:gravity="center"
+            <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginBottom="12dp">
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp" android:paddingEnd="16dp">
+                    <TextView android:id="@+id/chipAll"
+                        android:layout_width="wrap_content" android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/bg_chip_selected"
                         android:paddingStart="18dp" android:paddingEnd="18dp"
-                        android:text="@string/category_all" android:textColor="@drawable/chip_selector_text"
-                        android:textSize="13sp" android:textStyle="bold"
-                        tools:ignore="TouchTargetSizeCheck"/>
-
-                    <RadioButton android:id="@+id/chipIndian"
-                        android:layout_width="wrap_content" android:layout_height="36dp"
-                        android:layout_marginEnd="8dp" android:background="@drawable/chip_selector_bg"
-                        android:button="@null" android:gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:text="All"
+                        android:textColor="#FFFFFF" android:textSize="13sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/chipNorthIndian"
+                        android:layout_width="wrap_content" android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/bg_chip_unselected"
                         android:paddingStart="18dp" android:paddingEnd="18dp"
-                        android:text="@string/category_indian" android:textColor="@drawable/chip_selector_text"
-                        android:textSize="13sp" tools:ignore="TouchTargetSizeCheck"/>
-
-                    <RadioButton android:id="@+id/chipRegional"
-                        android:layout_width="wrap_content" android:layout_height="36dp"
-                        android:layout_marginEnd="8dp" android:background="@drawable/chip_selector_bg"
-                        android:button="@null" android:gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:text="North Indian"
+                        android:textColor="#888888" android:textSize="13sp" />
+                    <TextView android:id="@+id/chipStreetFood"
+                        android:layout_width="wrap_content" android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/bg_chip_unselected"
                         android:paddingStart="18dp" android:paddingEnd="18dp"
-                        android:text="@string/category_regional" android:textColor="@drawable/chip_selector_text"
-                        android:textSize="13sp" tools:ignore="TouchTargetSizeCheck"/>
-
-                    <RadioButton android:id="@+id/chipFastCooking"
-                        android:layout_width="wrap_content" android:layout_height="36dp"
-                        android:background="@drawable/chip_selector_bg"
-                        android:button="@null" android:gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:text="Street Food"
+                        android:textColor="#888888" android:textSize="13sp" />
+                    <TextView android:id="@+id/chipEastIndian"
+                        android:layout_width="wrap_content" android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/bg_chip_unselected"
                         android:paddingStart="18dp" android:paddingEnd="18dp"
-                        android:text="@string/category_fast_cooking" android:textColor="@drawable/chip_selector_text"
-                        android:textSize="13sp" tools:ignore="TouchTargetSizeCheck"/>
-                </RadioGroup>
+                        android:text="East Indian"
+                        android:textColor="#888888" android:textSize="13sp" />
+                </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- PROGRESS -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <!-- LOADING -->
+            <ProgressBar android:id="@+id/progressBar"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
-            <!-- POPULAR DISHES HEADER -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp">
+            <!-- MOST LOVED SECTION -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp" android:paddingEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Most Loved 🔥"
+                    android:textColor="#1A1A2E" android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="See all"
+                    android:textColor="#E8871A" android:textSize="13sp" android:textStyle="bold" />
+            </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/popular_dishes"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tvSeeAllPopular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/see_all"
-                    android:textColor="@color/green_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
-            </RelativeLayout>
-
-            <!-- POPULAR DISHES RECYCLERVIEW (vertical, nested in ScrollView) -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPopular"
+                android:id="@+id/rvPopularItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:nestedScrollingEnabled="false"
-                android:clipToPadding="false"/>
-
-            <!-- RECOMMENDED HEADER -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/recommended"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tvSeeAllRec"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/see_all"
-                    android:textColor="@color/green_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
-            </RelativeLayout>
-
-            <!-- RECOMMENDED RECYCLERVIEW (horizontal) -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecommended"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="8dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:nestedScrollingEnabled="false"
+                android:paddingStart="16dp"
                 android:clipToPadding="false"
-                android:orientation="horizontal"/>
+                android:layout_marginBottom="20dp"
+                android:nestedScrollingEnabled="false" />
 
+            <!-- ALL ITEMS SECTION -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp" android:paddingEnd="16dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="All Dishes"
+                    android:textColor="#1A1A2E" android:textSize="18sp" android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Empty state -->
+            <TextView android:id="@+id/tvNoItems"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="No items available" android:textColor="#AAAAAA" android:textSize="14sp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAllItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp" android:paddingEnd="12dp"
+                android:clipToPadding="false"
+                android:layout_marginBottom="16dp"
+                android:nestedScrollingEnabled="false" />
+
+            <View android:layout_width="match_parent" android:layout_height="16dp" />
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

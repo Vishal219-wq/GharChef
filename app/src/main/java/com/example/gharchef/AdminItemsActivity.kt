@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminItemsActivity : AppCompatActivity() {
@@ -17,9 +18,10 @@ class AdminItemsActivity : AppCompatActivity() {
     private lateinit var rvItems: RecyclerView
     private lateinit var tvEmpty: TextView
     private lateinit var progressBar: ProgressBar
-    private lateinit var btnAddItem: Button
+    private lateinit var etSearch: EditText
 
-    private val items = mutableListOf<MenuItem>()
+    private val allItems = mutableListOf<MenuItemData>()
+    private val filteredItems = mutableListOf<MenuItemData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,33 +31,49 @@ class AdminItemsActivity : AppCompatActivity() {
         rvItems     = findViewById(R.id.rvAdminItems)
         tvEmpty     = findViewById(R.id.tvEmpty)
         progressBar = findViewById(R.id.progressBar)
-        btnAddItem  = findViewById(R.id.btnAddItem)
+        etSearch    = findViewById(R.id.etSearchItems)
 
         rvItems.layoutManager = LinearLayoutManager(this)
-        rvItems.setHasFixedSize(true)   // perf optimisation
+        rvItems.setHasFixedSize(true)
 
         setupBottomNavigation()
         loadItems()
 
-        btnAddItem.setOnClickListener { showItemDialog(null) }
+        // Category filter tabs
+        listOf(
+            R.id.tabAll         to "all",
+            R.id.tabMainCourse  to "north_indian",
+            R.id.tabSnacks      to "street_food",
+            R.id.tabDesserts    to "east_indian"
+        ).forEach { (id, key) ->
+            findViewById<TextView>(id).setOnClickListener { filterByCategory(key) }
+        }
+
+        // Search
+        etSearch.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) { searchItems(s.toString()) }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        // FAB Add
+        findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.fabAddItem)
+            .setOnClickListener { showItemDialog(null) }
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadItems()
-    }
+    override fun onResume() { super.onResume(); loadItems() }
 
     private fun setupBottomNavigation() {
         findViewById<LinearLayout>(R.id.navAdminDashboard).setOnClickListener {
-            startActivity(
-                Intent(this, AdminDashboardActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            )
+            startActivity(Intent(this, AdminDashboardActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
         }
+        findViewById<LinearLayout>(R.id.navAdminOrders).setOnClickListener {
+            startActivity(Intent(this, AdminOrdersActivity::class.java))
+        }
+        findViewById<LinearLayout>(R.id.navAdminItems).setOnClickListener { /* already here */ }
         findViewById<LinearLayout>(R.id.navAdminUsers).setOnClickListener {
             startActivity(Intent(this, AdminUsersActivity::class.java))
         }
-        findViewById<LinearLayout>(R.id.navAdminItems).setOnClickListener { /* already here */ }
         findViewById<LinearLayout>(R.id.navAdminProfile).setOnClickListener {
             startActivity(Intent(this, AdminProfileActivity::class.java))
         }
@@ -66,93 +84,132 @@ class AdminItemsActivity : AppCompatActivity() {
         db.collection("menu").get()
             .addOnSuccessListener { result ->
                 progressBar.visibility = View.GONE
-                items.clear()
+                allItems.clear()
                 for (doc in result.documents) {
-                    items.add(
-                        MenuItem(
-                            id          = doc.id,
-                            name        = doc.getString("name")        ?: "",
-                            description = doc.getString("description") ?: "",
-                            price       = doc.getDouble("price")       ?: 0.0,
-                            imageUrl    = doc.getString("imageUrl")    ?: "",
-                            category    = doc.getString("category")    ?: "",
-                            prepTime    = doc.getString("prepTime")    ?: "20 mins",
-                            rating      = doc.getDouble("rating")      ?: 4.0,
-                            available   = doc.getBoolean("available")  ?: true
-                        )
-                    )
+                    allItems.add(MenuItemData(
+                        id          = doc.id,
+                        name        = doc.getString("name")        ?: "",
+                        description = doc.getString("description") ?: "",
+                        price       = doc.getDouble("price")       ?: 0.0,
+                        imageUrl    = doc.getString("imageUrl")    ?: "",
+                        category    = doc.getString("category")    ?: "",
+                        prepTime    = doc.getString("prepTime")    ?: "20 mins",
+                        rating      = doc.getDouble("rating")      ?: 4.0,
+                        available   = doc.getBoolean("available")  ?: true
+                    ))
                 }
-                if (items.isEmpty()) {
-                    tvEmpty.visibility  = View.VISIBLE
-                    rvItems.visibility  = View.GONE
-                } else {
-                    tvEmpty.visibility  = View.GONE
-                    rvItems.visibility  = View.VISIBLE
-                    rvItems.adapter     = AdminItemsAdapter(
-                        items,
-                        onEdit            = { showItemDialog(it) },
-                        onDelete          = { deleteItem(it) },
-                        onToggleAvailable = { toggleAvailable(it) }
-                    )
-                }
+                filteredItems.clear()
+                filteredItems.addAll(allItems)
+                updateRecycler()
             }
             .addOnFailureListener {
                 progressBar.visibility = View.GONE
-                Toast.makeText(this, "Failed: ${it.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to load: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun showItemDialog(existing: MenuItem?) {
+    private fun filterByCategory(key: String) {
+        filteredItems.clear()
+        filteredItems.addAll(if (key == "all") allItems else allItems.filter { it.category == key })
+        updateRecycler()
+    }
+
+    private fun searchItems(query: String) {
+        filteredItems.clear()
+        filteredItems.addAll(
+            if (query.isEmpty()) allItems
+            else allItems.filter { it.name.contains(query, ignoreCase = true) || it.category.contains(query, ignoreCase = true) }
+        )
+        updateRecycler()
+    }
+
+    private fun updateRecycler() {
+        if (filteredItems.isEmpty()) {
+            tvEmpty.visibility  = View.VISIBLE
+            rvItems.visibility  = View.GONE
+        } else {
+            tvEmpty.visibility  = View.GONE
+            rvItems.visibility  = View.VISIBLE
+            rvItems.adapter = AdminItemsAdapter(
+                filteredItems,
+                onEdit            = { showItemDialog(it) },
+                onDelete          = { deleteItem(it) },
+                onToggleAvailable = { toggleAvailable(it) }
+            )
+        }
+    }
+
+    private fun showItemDialog(existing: MenuItemData?) {
         val isEdit     = existing != null
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_admin_item, null)
 
-        val etName        = dialogView.findViewById<EditText>(R.id.etItemName)
-        val etDesc        = dialogView.findViewById<EditText>(R.id.etItemDesc)
-        val etPrice       = dialogView.findViewById<EditText>(R.id.etItemPrice)
-        val etCategory    = dialogView.findViewById<EditText>(R.id.etItemCategory)
-        val etPrepTime    = dialogView.findViewById<EditText>(R.id.etItemPrepTime)
-        val etRating      = dialogView.findViewById<EditText>(R.id.etItemRating)
-        val swAvailable   = dialogView.findViewById<Switch>(R.id.switchAvailable)
-        val swPopular     = dialogView.findViewById<Switch>(R.id.switchPopular)
+        val etName      = dialogView.findViewById<EditText>(R.id.etItemName)
+        val etDesc      = dialogView.findViewById<EditText>(R.id.etItemDesc)
+        val etPrice     = dialogView.findViewById<EditText>(R.id.etItemPrice)
+        val spinCategory = dialogView.findViewById<Spinner>(R.id.spinnerCategory)
+        val etPrepTime  = dialogView.findViewById<EditText>(R.id.etItemPrepTime)
+        val etRating    = dialogView.findViewById<EditText>(R.id.etItemRating)
+        val etImageUrl  = dialogView.findViewById<EditText>(R.id.etItemImageUrl)
+        val ivPreview   = dialogView.findViewById<ImageView>(R.id.ivItemImagePreview)
+        val swAvailable = dialogView.findViewById<Switch>(R.id.switchAvailable)
+        val swPopular   = dialogView.findViewById<Switch>(R.id.switchPopular)
+
+        // Category spinner
+        val categories = arrayOf("north_indian", "east_indian", "street_food")
+        val catLabels  = arrayOf("North Indian (Main Course)", "East Indian (Regional)", "Street Food (Snacks)")
+        spinCategory.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, catLabels)
 
         existing?.let {
             etName.setText(it.name)
             etDesc.setText(it.description)
             etPrice.setText(it.price.toString())
-            etCategory.setText(it.category)
             etPrepTime.setText(it.prepTime)
             etRating.setText(it.rating.toString())
+            etImageUrl.setText(it.imageUrl)
             swAvailable.isChecked = it.available
+            spinCategory.setSelection(categories.indexOf(it.category).coerceAtLeast(0))
+            if (it.imageUrl.isNotEmpty()) {
+                Glide.with(this).load(it.imageUrl).centerCrop().into(ivPreview)
+            }
         }
 
+        // Live image preview
+        etImageUrl.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val url = s.toString().trim()
+                if (url.isNotEmpty()) Glide.with(this@AdminItemsActivity).load(url).centerCrop().into(ivPreview)
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
         AlertDialog.Builder(this)
-            .setTitle(if (isEdit) "Edit Item" else "Add New Item")
+            .setTitle(if (isEdit) "Edit Dish" else "Add New Dish")
             .setView(dialogView)
-            .setPositiveButton(if (isEdit) "Update" else "Add") { _, _ ->
-                val name     = etName.text.toString().trim()
-                if (name.isEmpty()) {
-                    Toast.makeText(this, "Name is required", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
+            .setPositiveButton(if (isEdit) "Save Dish" else "Add Dish") { _, _ ->
+                val name = etName.text.toString().trim()
+                if (name.isEmpty()) { Toast.makeText(this, "Name is required", Toast.LENGTH_SHORT).show(); return@setPositiveButton }
+
                 val data = hashMapOf(
                     "name"        to name,
                     "description" to etDesc.text.toString().trim(),
                     "price"       to (etPrice.text.toString().toDoubleOrNull() ?: 0.0),
-                    "category"    to etCategory.text.toString().trim(),
+                    "category"    to categories[spinCategory.selectedItemPosition],
                     "prepTime"    to etPrepTime.text.toString().trim().ifEmpty { "20 mins" },
                     "rating"      to (etRating.text.toString().toDoubleOrNull() ?: 4.0),
                     "available"   to swAvailable.isChecked,
                     "popular"     to swPopular.isChecked,
-                    "imageUrl"    to (existing?.imageUrl ?: "")
+                    "imageUrl"    to etImageUrl.text.toString().trim()
                 )
+
                 val col = db.collection("menu")
                 if (isEdit && existing != null) {
                     col.document(existing.id).set(data)
-                        .addOnSuccessListener { Toast.makeText(this, "Item updated ✓", Toast.LENGTH_SHORT).show(); loadItems() }
+                        .addOnSuccessListener { Toast.makeText(this, "Updated ✓", Toast.LENGTH_SHORT).show(); loadItems() }
                         .addOnFailureListener { e -> Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show() }
                 } else {
                     col.add(data)
-                        .addOnSuccessListener { Toast.makeText(this, "Item added ✓", Toast.LENGTH_SHORT).show(); loadItems() }
+                        .addOnSuccessListener { Toast.makeText(this, "Added ✓", Toast.LENGTH_SHORT).show(); loadItems() }
                         .addOnFailureListener { e -> Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show() }
                 }
             }
@@ -160,9 +217,9 @@ class AdminItemsActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun deleteItem(item: MenuItem) {
+    private fun deleteItem(item: MenuItemData) {
         AlertDialog.Builder(this)
-            .setTitle("Delete Item")
+            .setTitle("Delete Dish")
             .setMessage("Delete \"${item.name}\"? This cannot be undone.")
             .setPositiveButton("Delete") { _, _ ->
                 db.collection("menu").document(item.id).delete()
@@ -173,7 +230,7 @@ class AdminItemsActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun toggleAvailable(item: MenuItem) {
+    private fun toggleAvailable(item: MenuItemData) {
         db.collection("menu").document(item.id)
             .update("available", !item.available)
             .addOnSuccessListener { loadItems() }
@@ -182,20 +239,22 @@ class AdminItemsActivity : AppCompatActivity() {
 }
 
 class AdminItemsAdapter(
-    private val items: List<MenuItem>,
-    private val onEdit:            (MenuItem) -> Unit,
-    private val onDelete:          (MenuItem) -> Unit,
-    private val onToggleAvailable: (MenuItem) -> Unit
+    private val items: List<MenuItemData>,
+    private val onEdit:            (MenuItemData) -> Unit,
+    private val onDelete:          (MenuItemData) -> Unit,
+    private val onToggleAvailable: (MenuItemData) -> Unit
 ) : RecyclerView.Adapter<AdminItemsAdapter.VH>() {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName:     TextView = view.findViewById(R.id.tvAdminItemName)
-        val tvCategory: TextView = view.findViewById(R.id.tvAdminItemCategory)
-        val tvPrice:    TextView = view.findViewById(R.id.tvAdminItemPrice)
-        val tvStatus:   TextView = view.findViewById(R.id.tvAdminItemStatus)
-        val btnEdit:    Button   = view.findViewById(R.id.btnEditItem)
-        val btnDelete:  Button   = view.findViewById(R.id.btnDeleteItem)
-        val btnToggle:  Button   = view.findViewById(R.id.btnToggleItem)
+        val ivImage:    ImageView = view.findViewById(R.id.ivAdminItemImage)
+        val tvPrice:    TextView  = view.findViewById(R.id.tvAdminItemPrice)
+        val tvVegBadge: TextView  = view.findViewById(R.id.tvVegBadge)
+        val tvName:     TextView  = view.findViewById(R.id.tvAdminItemName)
+        val tvCategory: TextView  = view.findViewById(R.id.tvAdminItemCategory)
+        val tvAvail:    TextView  = view.findViewById(R.id.tvAvailLabel)
+        val swAvail:    Switch    = view.findViewById(R.id.swAdminAvail)
+        val btnEdit:    ImageView = view.findViewById(R.id.btnAdminEdit)
+        val btnDelete:  ImageView = view.findViewById(R.id.btnAdminDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -204,24 +263,27 @@ class AdminItemsAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = items[position]
         holder.tvName.text     = item.name
-        holder.tvCategory.text = item.category.replace("_", " ").replaceFirstChar { it.uppercase() }
-        holder.tvPrice.text    = "₹%.2f".format(item.price)
+        holder.tvPrice.text    = "₹%.0f".format(item.price)
+        holder.tvCategory.text = "Category: ${item.category.replace("_", " ").replaceFirstChar { it.uppercase() }}"
 
-        if (item.available) {
-            holder.tvStatus.text      = "Available"
-            holder.tvStatus.setTextColor(Color.parseColor("#2E7D32"))
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_status_pill_green)
-            holder.btnToggle.text     = "Disable"
-        } else {
-            holder.tvStatus.text      = "Unavailable"
-            holder.tvStatus.setTextColor(Color.parseColor("#C62828"))
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_status_pill_red)
-            holder.btnToggle.text     = "Enable"
+        if (item.imageUrl.isNotEmpty()) {
+            Glide.with(holder.itemView.context).load(item.imageUrl)
+                .placeholder(R.drawable.bg_image_placeholder).centerCrop().into(holder.ivImage)
         }
+
+        // Veg/non-veg badge based on category
+        val isVeg = item.category != "non_veg"
+        holder.tvVegBadge.text = if (isVeg) "VEG" else "NON-VEG"
+        holder.tvVegBadge.setBackgroundColor(if (isVeg) Color.parseColor("#4CAF50") else Color.parseColor("#F44336"))
+
+        holder.tvAvail.text = if (item.available) "Available" else "Unavailable"
+        holder.tvAvail.setTextColor(if (item.available) Color.parseColor("#4CAF50") else Color.parseColor("#F44336"))
+        holder.swAvail.isChecked = item.available
+        holder.swAvail.setOnCheckedChangeListener(null)
+        holder.swAvail.setOnCheckedChangeListener { _, _ -> onToggleAvailable(item) }
 
         holder.btnEdit.setOnClickListener   { onEdit(item) }
         holder.btnDelete.setOnClickListener { onDelete(item) }
-        holder.btnToggle.setOnClickListener { onToggleAvailable(item) }
     }
 
     override fun getItemCount() = items.size

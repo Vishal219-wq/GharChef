@@ -1,331 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="#F5F0EA">
 
     <!-- HEADER -->
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/white"
-        android:elevation="4dp"
+        android:background="#F5F0EA"
+        android:elevation="2dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
-
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+        <ImageView android:id="@+id/ivBack"
+            android:layout_width="36dp" android:layout_height="36dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:padding="6dp"
             android:src="@drawable/ic_back"
-            android:contentDescription="Back"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/bg_back_button"
+            android:padding="8dp"
+            android:contentDescription="Back" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="My Cart"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+            android:text="My Cart" android:textColor="#1A1A2E"
+            android:textSize="18sp" android:textStyle="bold" />
     </RelativeLayout>
 
-    <!-- BOTTOM NAVIGATION BAR (anchored to bottom) -->
+    <!-- BOTTOM PLACE ORDER BAR -->
+    <LinearLayout
+        android:id="@+id/layoutPlaceOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_button_orange"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:visibility="gone">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="TOTAL TO PAY" android:textColor="#CCFFFFFF" android:textSize="11sp" android:textStyle="bold" android:letterSpacing="0.1" />
+            <TextView android:id="@+id/tvBottomTotal"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="₹0.00" android:textColor="#FFFFFF"
+                android:textSize="20sp" android:textStyle="bold" />
+        </LinearLayout>
+        <Button android:id="@+id/btnPlaceOrder"
+            android:layout_width="wrap_content" android:layout_height="48dp"
+            android:background="@null" android:stateListAnimator="@null"
+            android:text="Place Order  ›"
+            android:textColor="#FFFFFF" android:textSize="16sp" android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- BOTTOM NAV -->
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:elevation="12dp"
-        android:weightSum="4"
-        tools:ignore="DisableBaselineAlignment">
-
-        <!-- HOME -->
-        <LinearLayout
-            android:id="@+id/navHome"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home"
-                app:tint="@color/nav_icon_inactive"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_home"
-                android:textColor="@color/nav_icon_inactive"
-                android:textSize="11sp"
-                tools:ignore="TextContrastCheck" />
-        </LinearLayout>
-
-        <!-- ORDERS -->
-        <LinearLayout
-            android:id="@+id/navOrders"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_orders"
-                app:tint="@color/nav_icon_inactive"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_orders"
-                android:textColor="@color/nav_icon_inactive"
-                android:textSize="11sp"
-                tools:ignore="TextContrastCheck" />
-        </LinearLayout>
-
-        <!-- CART (active) -->
-        <LinearLayout
-            android:id="@+id/navCart"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_cart"
-                app:tint="@color/green_primary"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_cart"
-                android:textColor="@color/green_primary"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                tools:ignore="TextContrastCheck" />
-        </LinearLayout>
-
-        <!-- PROFILE -->
-        <LinearLayout
-            android:id="@+id/navProfile"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_profile"
-                app:tint="@color/nav_icon_inactive"
-                tools:ignore="ContentDescription,ImageContrastCheck" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_profile"
-                android:textColor="@color/nav_icon_inactive"
-                android:textSize="11sp"
-                tools:ignore="TextContrastCheck" />
-        </LinearLayout>
-
-    </LinearLayout>
-    <!-- END bottom nav -->
-
-    <!-- BOTTOM ORDER SUMMARY (sits above the nav bar) -->
-    <LinearLayout
-        android:id="@+id/layoutBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/bottomNav"
-        android:background="@color/white"
+        android:layout_above="@id/layoutPlaceOrder"
+        android:background="#FFFFFF"
         android:elevation="8dp"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Subtotal"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/tvSubtotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹0.00"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <LinearLayout android:id="@+id/navHome" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_home" app:tint="#AAAAAA" android:contentDescription="Home" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Home" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delivery Charge"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/tvDelivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹40.00"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                tools:ignore="HardcodedText" />
+        <LinearLayout android:id="@+id/navSearch" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_search" app:tint="#AAAAAA" android:contentDescription="Search" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Search" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="#F0F0F0" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Total"
-                android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/tvTotal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹0.00"
-                android:textColor="@color/green_primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+        <LinearLayout android:id="@+id/navOrders" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_orders" app:tint="#AAAAAA" android:contentDescription="Orders" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Orders" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnPlaceOrder"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/bg_button_green"
-            android:stateListAnimator="@null"
-            android:text="Place Order"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+        <LinearLayout android:id="@+id/navCart" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_cart" app:tint="#E8871A" android:contentDescription="Cart" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cart" android:textColor="#E8871A" android:textSize="10sp" android:textStyle="bold" android:layout_marginTop="2dp" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- PROGRESS -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:visibility="gone" />
+    <ProgressBar android:id="@+id/progressBar"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_below="@id/header" android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" android:visibility="gone" />
 
-    <!-- EMPTY CART -->
-    <LinearLayout
-        android:id="@+id/tvEmptyCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:gravity="center"
-        android:orientation="vertical"
+    <!-- EMPTY STATE -->
+    <LinearLayout android:id="@+id/tvEmptyCart"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_below="@id/header" android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp" android:gravity="center" android:orientation="vertical"
         android:visibility="gone">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_cart"
-            android:alpha="0.3"
-            android:contentDescription="Empty Cart"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Your cart is empty"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Add items from the home screen"
-            android:textColor="@color/text_secondary"
-            android:textSize="13sp"
-            tools:ignore="HardcodedText" />
+        <ImageView android:layout_width="80dp" android:layout_height="80dp"
+            android:src="@drawable/ic_cart" android:alpha="0.3" android:contentDescription="Empty" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:text="Your cart is empty"
+            android:textColor="#888888" android:textSize="16sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" android:text="Add items from the home screen"
+            android:textColor="#AAAAAA" android:textSize="13sp" />
     </LinearLayout>
 
-    <!-- CART RECYCLER -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCart"
+    <!-- SCROLL CONTENT -->
+    <ScrollView
+        android:id="@+id/scrollContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header"
-        android:layout_above="@id/layoutBottom"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:clipToPadding="false" />
+        android:layout_above="@id/bottomNav"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Item count label -->
+            <TextView android:id="@+id/tvItemCount"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="0 ITEMS ADDED" android:textColor="#E8871A"
+                android:textSize="12sp" android:textStyle="bold" android:letterSpacing="0.1"
+                android:layout_marginBottom="12dp" />
+
+            <!-- RECYCLER for cart items -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <!-- BILL SUMMARY CARD -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Bill Summary" android:textColor="#1A1A2E"
+                        android:textSize="16sp" android:textStyle="bold" android:layout_marginBottom="12dp" />
+
+                    <!-- Item Total -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="Item Total" android:textColor="#888888" android:textSize="14sp" />
+                        <TextView android:id="@+id/tvSubtotal" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="₹0" android:textColor="#1A1A2E" android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- Delivery Fee -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="Delivery Fee" android:textColor="#888888" android:textSize="14sp" />
+                        <TextView android:id="@+id/tvDelivery" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="₹40" android:textColor="#1A1A2E" android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- Tax -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="Taxes &amp; Charges" android:textColor="#888888" android:textSize="14sp" />
+                        <TextView android:id="@+id/tvTax" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="₹0" android:textColor="#1A1A2E" android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp"
+                        android:background="#F0F0F0" android:layout_marginTop="12dp" android:layout_marginBottom="12dp" />
+
+                    <!-- Grand Total -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="Grand Total"
+                            android:textColor="#1A1A2E" android:textSize="16sp" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvTotal" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="₹0" android:textColor="#E8871A"
+                            android:textSize="18sp" android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Bottom padding so content isn't behind place order button -->
+            <View android:layout_width="match_parent" android:layout_height="80dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

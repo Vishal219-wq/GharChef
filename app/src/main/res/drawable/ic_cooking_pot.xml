@@ -1,0 +1,80 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Pot lid handle -->
+    <path
+        android:fillColor="#E8871A"
+        android:pathData="M42,18 Q50,12 58,18 L56,24 Q50,20 44,24 Z" />
+
+    <!-- Pot lid -->
+    <path
+        android:fillColor="#E8871A"
+        android:pathData="M20,28 Q50,18 80,28 L78,36 Q50,26 22,36 Z" />
+
+    <!-- Pot body -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="22"
+        android:y="36"
+        android:width="56"
+        android:height="38"
+        android:rx="4" />
+
+    <!-- Left handle -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="10"
+        android:y="40"
+        android:width="14"
+        android:height="8"
+        android:rx="4" />
+
+    <!-- Right handle -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="76"
+        android:y="40"
+        android:width="14"
+        android:height="8"
+        android:rx="4" />
+
+    <!-- Stove top base -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="28"
+        android:y="74"
+        android:width="44"
+        android:height="6"
+        android:rx="2" />
+
+    <!-- Stove legs left -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="32"
+        android:y="80"
+        android:width="8"
+        android:height="10"
+        android:rx="2" />
+
+    <!-- Stove legs right -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="60"
+        android:y="80"
+        android:width="8"
+        android:height="10"
+        android:rx="2" />
+
+    <!-- Base line -->
+    <rect
+        android:fillColor="#E8871A"
+        android:x="20"
+        android:y="88"
+        android:width="60"
+        android:height="4"
+        android:rx="2" />
+
+</vector>

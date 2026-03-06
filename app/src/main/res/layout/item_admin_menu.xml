@@ -3,141 +3,92 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="3dp">
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:padding="12dp">
 
-        <!-- Top: name + price -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!-- Food image -->
+        <ImageView android:id="@+id/ivAdminItemImage"
+            android:layout_width="100dp" android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_image_placeholder"
+            android:src="@drawable/ic_launcher_foreground"
+            android:contentDescription="Dish" />
 
-            <TextView
-                android:id="@+id/tvAdminItemName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/tvAdminItemPrice"
-                android:layout_marginEnd="8dp"
-                android:text="Item Name"
-                android:textColor="#1A1A2E"
-                android:textSize="16sp"
-                android:fontFamily="@font/adamina"/>
+        <!-- Details -->
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical"
+            android:layout_marginStart="12dp">
 
-            <TextView
-                android:id="@+id/tvAdminItemPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="₹0"
-                android:textColor="#2E7D32"
-                android:textSize="16sp"
-                android:fontFamily="@font/buenard_bold"
-                android:textStyle="bold"/>
-        </RelativeLayout>
+            <!-- Price + Veg badge -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView android:id="@+id/tvAdminItemPrice"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="₹0" android:textColor="#E8871A"
+                    android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:id="@+id/tvVegBadge"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="VEG"
+                    android:textColor="#FFFFFF" android:textSize="10sp" android:textStyle="bold"
+                    android:background="@drawable/bg_veg_badge"
+                    android:paddingStart="8dp" android:paddingEnd="8dp"
+                    android:paddingTop="3dp" android:paddingBottom="3dp" />
+            </LinearLayout>
 
-        <!-- Category + status row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            <TextView android:id="@+id/tvAdminItemName"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Dish Name" android:textColor="#1A1A2E"
+                android:textSize="15sp" android:textStyle="bold"
+                android:maxLines="1" android:ellipsize="end" />
 
-            <ImageView android:layout_width="13dp" android:layout_height="13dp"
-                android:src="@drawable/ic_admin_category"
-                app:tint="#AAAAAA"
-                android:contentDescription="Category"/>
-            <TextView
-                android:id="@+id/tvAdminItemCategory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Category"
-                android:textColor="#888888"
-                android:textSize="12sp"
-                android:fontFamily="@font/buenard"
-                android:layout_marginStart="4dp"/>
+            <TextView android:id="@+id/tvAdminItemCategory"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Category: Main Course"
+                android:textColor="#AAAAAA" android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tvAdminItemStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Available"
-                android:textSize="12sp"
-                android:fontFamily="@font/buenard_bold"
-                android:textStyle="bold"
-                android:background="@drawable/bg_status_pill"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"/>
-        </LinearLayout>
+            <!-- Availability row -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
 
-        <!-- Divider -->
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="#F0F0F0"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="10dp"/>
+                <TextView android:id="@+id/tvAvailLabel"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Available" android:textColor="#4CAF50"
+                    android:textSize="13sp" android:textStyle="bold" />
 
-        <!-- Action buttons -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <Switch android:id="@+id/swAdminAvail"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:thumbTint="#E8871A"
+                    android:trackTint="#FFE0B2" />
 
-            <Button
-                android:id="@+id/btnEditItem"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_button_green_outline"
-                android:stateListAnimator="@null"
-                android:text="Edit"
-                android:textColor="#2E7D32"
-                android:textSize="12sp"
-                android:fontFamily="@font/buenard_bold"
-                android:textStyle="bold"
-                android:drawableStart="@drawable/ic_admin_edit"
-                android:drawablePadding="4dp"
-                android:drawableTint="#2E7D32"/>
+                <!-- Edit icon -->
+                <ImageView android:id="@+id/btnAdminEdit"
+                    android:layout_width="32dp" android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_icon_btn"
+                    android:src="@drawable/ic_edit"
+                    android:padding="6dp"
+                    android:contentDescription="Edit" />
 
-            <Button
-                android:id="@+id/btnToggleItem"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="6dp"
-                android:background="@drawable/bg_chip_inactive"
-                android:stateListAnimator="@null"
-                android:text="Disable"
-                android:textColor="#666666"
-                android:textSize="12sp"
-                android:fontFamily="@font/buenard"/>
-
-            <Button
-                android:id="@+id/btnDeleteItem"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_logout_button"
-                android:stateListAnimator="@null"
-                android:text="Delete"
-                android:textColor="#D32F2F"
-                android:textSize="12sp"
-                android:fontFamily="@font/buenard_bold"
-                android:textStyle="bold"
-                android:drawableStart="@drawable/ic_admin_delete"
-                android:drawablePadding="4dp"
-                android:drawableTint="#D32F2F"/>
+                <!-- Delete icon -->
+                <ImageView android:id="@+id/btnAdminDelete"
+                    android:layout_width="32dp" android:layout_height="32dp"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_delete_btn"
+                    android:src="@drawable/ic_delete"
+                    android:padding="6dp"
+                    android:contentDescription="Delete" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

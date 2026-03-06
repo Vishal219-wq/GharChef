@@ -3,94 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light">
+    android:background="#F5F0EA">
 
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:elevation="4dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="16dp">
+    <!-- SEARCH HEADER -->
+    <RelativeLayout android:id="@+id/searchHeader"
+        android:layout_width="match_parent" android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:paddingStart="8dp" android:paddingEnd="16dp"
+        android:elevation="4dp">
 
-        <ImageView
-            android:id="@+id/ivBack"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+        <ImageView android:id="@+id/ivBack"
+            android:layout_width="40dp" android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:padding="6dp"
             android:src="@drawable/ic_back"
-            android:contentDescription="Back"/>
+            android:background="@drawable/bg_back_button"
+            android:padding="10dp" android:contentDescription="Back" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_toEndOf="@id/ivBack"
-            android:layout_centerVertical="true"
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="44dp"
+            android:layout_toEndOf="@id/ivBack" android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
-            android:background="@drawable/bg_search"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp">
-
-            <ImageView
-                android:id="@+id/ivSearchIcon"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignParentStart="true"
+            android:background="@drawable/bg_input_field">
+            <ImageView android:layout_width="18dp" android:layout_height="18dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_search"
-                app:tint="@color/text_secondary"
-                android:contentDescription="Search"/>
-
-            <EditText
-                android:id="@+id/etSearchQuery"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@id/ivSearchIcon"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="14dp"
+                android:src="@drawable/ic_search" app:tint="#E8871A" android:contentDescription="Search" />
+            <EditText android:id="@+id/etSearchQuery"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:layout_marginStart="40dp"
                 android:background="@null"
-                android:hint="Search dishes..."
-                android:textColorHint="@color/text_secondary"
-                android:imeOptions="actionSearch"
+                android:hint="Search dishes, cuisines..."
+                android:textColorHint="#BBBBBB"
                 android:inputType="text"
-                android:maxLines="1"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"/>
+                android:textColor="#1A1A2E" android:textSize="14sp"
+                android:imeOptions="actionSearch" />
         </RelativeLayout>
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:visibility="gone"/>
+    <!-- PROGRESS -->
+    <ProgressBar android:id="@+id/progressBar"
+        android:layout_width="match_parent" android:layout_height="3dp"
+        android:layout_below="@id/searchHeader"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="true" android:indeterminateTint="#E8871A"
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tvNoResults"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
+    <!-- EMPTY STATE -->
+    <LinearLayout android:id="@+id/tvSearchEmpty"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_below="@id/searchHeader"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:text="No results found"
-        android:textColor="@color/text_secondary"
-        android:textSize="15sp"
-        android:visibility="gone"/>
+        android:layout_marginTop="80dp"
+        android:gravity="center" android:orientation="vertical"
+        android:visibility="gone">
+        <ImageView android:layout_width="60dp" android:layout_height="60dp"
+            android:src="@drawable/ic_search" app:tint="#DDDDDD" android:contentDescription="Empty" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="No dishes found" android:textColor="#AAAAAA" android:textSize="16sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Try a different search term"
+            android:textColor="#BBBBBB" android:textSize="13sp" />
+    </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSearchResults"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/header"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
-        android:clipToPadding="false"/>
+    <!-- RESULTS -->
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvSearchResults"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_below="@id/searchHeader"
+        android:paddingStart="16dp" android:paddingEnd="16dp"
+        android:paddingTop="8dp" android:paddingBottom="16dp"
+        android:clipToPadding="false" />
 
 </RelativeLayout>
